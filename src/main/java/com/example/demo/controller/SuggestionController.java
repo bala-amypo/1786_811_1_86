@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Suggestion;
+import com.example.demo.entity.SuggestionEntity;
 import com.example.demo.service.SuggestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
