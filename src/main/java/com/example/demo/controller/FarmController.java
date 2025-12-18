@@ -22,7 +22,7 @@ public class FarmController {
     }
 
     @GetMapping("/{userId}")
-    public List<Farm> getFarms(@PathVariable Long userId) {
+    public List<FarmEntity> getFarms(@PathVariable Long userId) {
         return farmService.getFarmsByUser(userId);
     }
 }
