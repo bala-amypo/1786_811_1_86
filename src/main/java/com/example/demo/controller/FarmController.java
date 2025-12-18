@@ -2,8 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.FarmRequest;
 import com.example.demo.entity.FarmEntity;
-import com.example.demo.service.FarmService;
+import com.example.demo.service.FarmEntityService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,16 +14,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FarmController {
 
-    private final FarmService farmService;
+    private final FarmEntityService farmService;
 
-    @PostMapping("/{userId}")
-    public Farm addFarm(@PathVariable Long userId,
-                        @RequestBody FarmRequest request) {
-        return farmService.addFarm(userId, request);
+    // POST /farms → add farm
+    @PostMapping
+    public FarmEntity createFarm(@RequestBody FarmRequest req,
+                                 Authentication auth) {
+        return farmService.createFarm(req, auth);
     }
 
-    @GetMapping("/{userId}")
-    public List<FarmEntity> getFarms(@PathVariable Long userId) {
-        return farmService.getFarmsByUser(userId);
+    // GET /farms → list user farms
+    @GetMapping
+    public List<FarmEntity> listFarms(Authentication auth) {
+        return farmService.listFarms(auth);
+    }
+
+    // GET /farms/{farmId} → get farm details
+    @GetMapping("/{farmId}")
+    public FarmEntity getFarm(@PathVariable Long farmId) {
+        return farmService.getFarm(farmId);
     }
 }
