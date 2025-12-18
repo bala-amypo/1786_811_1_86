@@ -16,20 +16,17 @@ public class FarmController {
 
     private final FarmEntityService farmService;
 
-    // POST /farms → add farm
     @PostMapping
     public FarmEntity createFarm(@RequestBody FarmRequest req,
                                  Authentication auth) {
         return farmService.createFarm(req, auth);
     }
 
-    // GET /farms → list user farms
     @GetMapping
     public List<FarmEntity> listFarms(Authentication auth) {
         return farmService.listFarms(auth);
     }
 
-    // GET /farms/{farmId} → get farm details
     @GetMapping("/{farmId}")
     public FarmEntity getFarm(@PathVariable Long farmId) {
         return farmService.getFarm(farmId);
