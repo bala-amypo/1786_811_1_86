@@ -23,8 +23,6 @@ public class SuggestionController {
     public SuggestionEntity getSuggestion(@PathVariable Long suggestionId) {
         return suggestionService.getSuggestion(suggestionId);
     }
-
-    // GET /suggestions/farm/{farmId}
     @GetMapping("/farm/{farmId}")
     public List<SuggestionEntity> getSuggestionsByFarm(@PathVariable Long farmId) {
         return suggestionService.getSuggestionsByFarm(farmId);
