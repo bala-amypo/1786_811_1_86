@@ -1,27 +1,26 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.CropRequest;
-import com.example.demo.entity.Crop;
-import com.example.demo.service.CropService;
+import com.example.demo.entity.Suggestion;
+import com.example.demo.service.SuggestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/crops")
+@RequestMapping("/suggestions")
 @RequiredArgsConstructor
-public class CropController {
+public class SuggestionController {
 
-    private final CropService cropService;
+    private final SuggestionService suggestionService;
 
-    @PostMapping
-    public Crop addCrop(@RequestBody CropRequest request) {
-        return cropService.addCrop(request);
+    @PostMapping("/{farmId}")
+    public Suggestion generateSuggestion(@PathVariable Long farmId) {
+        return suggestionService.generateSuggestion(farmId);
     }
 
-    @GetMapping
-    public List<Crop> getAllCrops() {
-        return cropService.getAllCrops();
+    @GetMapping("/{farmId}")
+    public List<Suggestion> getSuggestions(@PathVariable Long farmId) {
+        return suggestionService.getSuggestionsByFarm(farmId);
     }
 }
