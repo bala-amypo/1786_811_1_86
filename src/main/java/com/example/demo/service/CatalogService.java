@@ -1,17 +1,17 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import com.example.demo.entity.CropEntity;
 import com.example.demo.entity.FertilizerEntity;
-
-import java.util.List;
 
 public interface CatalogService {
 
     CropEntity addCrop(CropEntity crop);
 
+    List<CropEntity> getAllCrops();
+
     FertilizerEntity addFertilizer(FertilizerEntity fertilizer);
 
-    List<CropEntity> findSuitableCrops(Double ph, Double waterLevel, String season);
-
-    List<FertilizerEntity> findFertilizersForCrops(List<String> cropNames);
+    List<FertilizerEntity> getAllFertilizers();
 }
