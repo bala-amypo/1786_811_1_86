@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface SuggestionRepository extends JpaRepository<SuggestionEntity, Long> {
 
-    List<Suggestion> findByFarmId(Long farmId);
+    List<SuggestionEntity> findByFarmId(Long farmId);
 }
