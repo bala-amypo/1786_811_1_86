@@ -1,25 +1,35 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.CropEntity;
-import com.example.demo.entity.FertilizerEntity;
-import com.example.demo.repository.CropEntityRepository;
-import com.example.demo.repository.FertilizerEntityRepository;
-import com.example.demo.service.CatalogService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+import com.example.demo.entity.CropEntity;
+import com.example.demo.entity.FertilizerEntity;
+import com.example.demo.repository.CropRepository;
+import com.example.demo.repository.FertilizerRepository;
+import com.example.demo.service.CatalogService;
+
 @Service
-@RequiredArgsConstructor
 public class CatalogServiceImpl implements CatalogService {
 
-    private final CropEntityRepository cropRepository;
-    private final FertilizerEntityRepository fertilizerRepository;
+    private final CropRepository cropRepository;
+    private final FertilizerRepository fertilizerRepository;
+
+    public CatalogServiceImpl(CropRepository cropRepository,
+                              FertilizerRepository fertilizerRepository) {
+        this.cropRepository = cropRepository;
+        this.fertilizerRepository = fertilizerRepository;
+    }
 
     @Override
     public CropEntity addCrop(CropEntity crop) {
         return cropRepository.save(crop);
+    }
+
+    @Override
+    public List<CropEntity> getAllCrops() {
+        return cropRepository.findAll();
     }
 
     @Override
@@ -28,12 +38,7 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
-    public List<CropEntity> findSuitableCrops(Double ph, Double waterLevel, String season) {
-        return cropRepository.findSuitableCrops(ph, waterLevel, season);
-    }
-
-    @Override
-    public List<FertilizerEntity> findFertilizersForCrops(List<String> cropNames) {
-        return fertilizerRepository.findByCropNames(cropNames);
+    public List<FertilizerEntity> getAllFertilizers() {
+        return fertilizerRepository.findAll();
     }
 }
