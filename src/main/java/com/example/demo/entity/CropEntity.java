@@ -1,12 +1,12 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 @Entity
+@Table(name = "crops")
 @Data
 @Builder
 @NoArgsConstructor
@@ -17,13 +17,19 @@ public class CropEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Column(length = 100)
     private String name;
 
+    @NotNull
     private Double suitablePHMin;
 
+    @NotNull
     private Double suitablePHMax;
 
+    @NotNull
     private Double requiredWater;
 
+    @NotBlank
     private String season;
 }
