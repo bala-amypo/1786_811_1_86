@@ -1,42 +1,12 @@
-package com.example.demo.service.impl;
-
-import com.example.demo.entity.FarmEntity;
-import com.example.demo.entity.SuggestionEntity;
-import com.example.demo.repository.FarmEntityRepository;
-import com.example.demo.repository.SuggestionEntityRepository;
-import com.example.demo.service.SuggestionService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+package com.example.demo.repository;
 
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class SuggestionServiceImpl implements SuggestionService {
+import org.springframework.data.jpa.repository.JpaRepository;
 
-    private final FarmEntityRepository farmRepository;
-    private final SuggestionEntityRepository suggestionRepository;
+import com.example.demo.entity.SuggestionEntity;
 
-    @Override
-    public SuggestionEntity generateSuggestion(Long farmId) {
-        FarmEntity farm = farmRepository.findById(farmId).orElseThrow();
+public interface SuggestionRepository extends JpaRepository<SuggestionEntity, Long> {
 
-        SuggestionEntity suggestion = SuggestionEntity.builder()
-                .farm(farm)
-                .suggestedCrops("Rice,Wheat")
-                .suggestedFertilizers("Urea,DAP")
-                .build();
-
-        return suggestionRepository.save(suggestion);
-    }
-
-    @Override
-    public SuggestionEntity getSuggestion(Long suggestionId) {
-        return suggestionRepository.findById(suggestionId).orElseThrow();
-    }
-
-    @Override
-    public List<SuggestionEntity> getSuggestionsByFarm(Long farmId) {
-        return suggestionRepository.findByFarmId(farmId);
-    }
+    List<SuggestionEntity> findByFarmId(Long farmId);
 }
