@@ -1,48 +1,46 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.CropRequest;
-import com.example.demo.dto.FertilizerRequest;
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.demo.entity.CropEntity;
 import com.example.demo.entity.FertilizerEntity;
 import com.example.demo.service.CatalogService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/catalog")
-@RequiredArgsConstructor
 public class CatalogController {
 
-    private final CatalogService catalogService;
+    private final CatalogService service;
 
-    // ADMIN
-    @PostMapping("/crop")
-    public CropEntity addCrop(@RequestBody CropRequest req,
-                              Authentication auth) {
-        return catalogService.addCrop(req, auth);
+    public CatalogController(CatalogService service) {
+        this.service = service;
     }
 
-    // ADMIN
-    @PostMapping("/fertilizer")
-    public FertilizerEntity addFertilizer(@RequestBody FertilizerRequest req,
-                                          Authentication auth) {
-        return catalogService.addFertilizer(req, auth);
+    // CROPS
+    @PostMapping("/crops")
+    public CropEntity addCrop(@RequestBody CropEntity crop) {
+        return service.addCrop(crop);
     }
 
-    // GET suitable crops
-    @GetMapping("/crops/suitable")
-    public List<CropEntity> getSuitableCrops(@RequestParam Double ph,
-                                             @RequestParam Double water,
-                                             @RequestParam String season) {
-        return catalogService.getSuitableCrops(ph, water, season);
+    @GetMapping("/crops")
+    public List<CropEntity> getAllCrops() {
+        return service.getAllCrops();
     }
 
-    // GET fertilizers by crop
-    @GetMapping("/fertilizers/by-crop")
-    public List<FertilizerEntity> getFertilizersByCrop(@RequestParam String name) {
-        return catalogService.getFertilizersByCrop(name);
+    // FERTILIZERS
+    @PostMapping("/fertilizers")
+    public FertilizerEntity addFertilizer(@RequestBody FertilizerEntity fertilizer) {
+        return service.addFertilizer(fertilizer);
+    }
+
+    @GetMapping("/fertilizers")
+    public List<FertilizerEntity> getAllFertilizers() {
+        return service.getAllFertilizers();
     }
 }
