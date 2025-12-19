@@ -22,7 +22,6 @@ public class CatalogController {
         this.service = service;
     }
 
-    // CROPS
     @PostMapping("/crops")
     public CropEntity addCrop(@RequestBody CropEntity crop) {
         return service.addCrop(crop);
@@ -33,7 +32,6 @@ public class CatalogController {
         return service.getAllCrops();
     }
 
-    // FERTILIZERS
     @PostMapping("/fertilizers")
     public FertilizerEntity addFertilizer(@RequestBody FertilizerEntity fertilizer) {
         return service.addFertilizer(fertilizer);
