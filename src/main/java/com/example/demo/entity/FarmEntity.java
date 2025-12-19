@@ -1,38 +1,83 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "farms")
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class FarmEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity owner;
-
-    @NotBlank
-    @Column(length = 100)
+    @Column(nullable = false)
     private String name;
 
-    @NotNull
-    @Column(name = "soil_ph")
+    @Column(nullable = false)
     private Double soilPH;
 
-    @NotNull
-    @Column(name = "water_level")
+    @Column(nullable = false)
     private Double waterLevel;
 
-    @NotBlank
+    @Column(nullable = false)
     private String season;
+
+    @ManyToOne(optional = false)
+    private UserEntity owner;
+
+    public FarmEntity() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Double getSoilPH() {
+        return soilPH;
+    }
+
+    public void setSoilPH(Double soilPH) {
+        this.soilPH = soilPH;
+    }
+
+    public Double getWaterLevel() {
+        return waterLevel;
+    }
+
+    public void setWaterLevel(Double waterLevel) {
+        this.waterLevel = waterLevel;
+    }
+
+    public String getSeason() {
+        return season;
+    }
+    
+    public void setSeason(String season) {
+        this.season = season;
+    }
+
+    public UserEntity getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UserEntity owner) {
+        this.owner = owner;
+    }
 }
