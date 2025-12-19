@@ -10,7 +10,7 @@
     <artifactId>demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Crop Fertilizer API</name>
-    <description>Crop & Fertilizer Suggestion API</description>
+    <description>Crop &amp; Fertilizer Suggestion API</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
