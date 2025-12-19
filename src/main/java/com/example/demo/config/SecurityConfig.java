@@ -1,28 +1,32 @@
+package com.example.demo.config;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                // allow Swagger/OpenAPI without auth
+                // Permit all requests to Swagger and OpenAPI
                 .requestMatchers(
-                    "/v3/api-docs/**",
                     "/swagger-ui/**",
-                    "/swagger-ui.html"
+                    "/swagger-ui.html",
+                    "/v3/api-docs/**",
+                    "/v3/api-docs.yaml",
+                    "/v3/api-docs.json"
                 ).permitAll()
-                // everything else needs auth
+                // Any other request requires authentication
                 .anyRequest().authenticated()
-            );
-        // remove .httpBasic() here if you don't want browser popup at all
+            )
+            .csrf(csrf -> csrf.disable()) // Disable CSRF for Swagger testing
+            .formLogin().disable()         // Disable login form
+            .httpBasic().disable();        // Disable basic auth
+
         return http.build();
     }
 }
