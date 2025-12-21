@@ -12,7 +12,4 @@ public interface FarmService {
 
     FarmEntity getById(Long id);
 
-    FarmEntity update(Long id, FarmEntity farm);
-
-    void delete(Long id);
 }
