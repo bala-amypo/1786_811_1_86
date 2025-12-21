@@ -2,46 +2,43 @@ package com.example.demo.controller;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.CropEntity;
 import com.example.demo.entity.FertilizerEntity;
 import com.example.demo.service.CatalogService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/catalog")
 public class CatalogController {
 
-    private final CatalogService catalogService;
+    private final CatalogService service;
 
-    public CatalogController(CatalogService catalogService) {
-        this.catalogService = catalogService;
+    public CatalogController(CatalogService service) {
+        this.service = service;
     }
 
     @PostMapping("/crops")
-    public ResponseEntity<CropEntity> addCrop(@RequestBody CropEntity crop) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(catalogService.addCrop(crop));
+    public CropEntity addCrop(@RequestBody CropEntity crop) {
+        return service.addCrop(crop);
     }
 
     @GetMapping("/crops")
     public List<CropEntity> getAllCrops() {
-        return catalogService.getAllCrops();
+        return service.getAllCrops();
     }
 
     @PostMapping("/fertilizers")
-    public ResponseEntity<FertilizerEntity> addFertilizer(
-            @RequestBody FertilizerEntity fertilizer) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(catalogService.addFertilizer(fertilizer));
+    public FertilizerEntity addFertilizer(@RequestBody FertilizerEntity fertilizer) {
+        return service.addFertilizer(fertilizer);
     }
 
     @GetMapping("/fertilizers")
     public List<FertilizerEntity> getAllFertilizers() {
-        return catalogService.getAllFertilizers();
+        return service.getAllFertilizers();
     }
 }
