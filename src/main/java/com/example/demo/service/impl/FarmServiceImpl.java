@@ -33,19 +33,5 @@ public class FarmServiceImpl implements FarmService {
                 .orElseThrow(() -> new ResourceNotFoundException("Farm not found with id: " + id));
     }
 
-    @Override
-    public FarmEntity update(Long id, FarmEntity farm) {
-        FarmEntity existing = getById(id);
-        existing.setName(farm.getName());
-        existing.setSoilPH(farm.getSoilPH());
-        existing.setWaterLevel(farm.getWaterLevel());
-        existing.setSeason(farm.getSeason());
-        existing.setOwner(farm.getOwner());
-        return repository.save(existing);
-    }
-
-    @Override
-    public void delete(Long id) {
-        repository.delete(getById(id));
-    }
+    
 }
