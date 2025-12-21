@@ -33,9 +33,4 @@ public class SuggestionServiceImpl implements SuggestionService {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Suggestion not found with id: " + id));
     }
-
-    @Override
-    public void delete(Long id) {
-        repository.delete(getById(id));
-    }
 }
