@@ -38,16 +38,4 @@ public class FarmController {
     public FarmEntity getById(@PathVariable Long id) {
         return service.getById(id);
     }
-
-    @PutMapping("/{id}")
-    public FarmEntity update(@PathVariable Long id,
-                             @RequestBody FarmEntity farm) {
-        return service.update(id, farm);
-    }
-
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id) {
-        service.delete(id);
-        return "Farm deleted successfully";
-    }
 }

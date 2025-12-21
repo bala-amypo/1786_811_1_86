@@ -38,9 +38,5 @@ public class SuggestionController {
         return service.getById(id);
     }
 
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id) {
-        service.delete(id);
-        return "Suggestion deleted successfully";
-    }
+
 }
