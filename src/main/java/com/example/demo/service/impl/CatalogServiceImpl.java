@@ -2,9 +2,7 @@ package com.example.demo.service.impl;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.example.demo.entity.CropEntity;
 import com.example.demo.entity.FertilizerEntity;
@@ -26,14 +24,6 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     public CropEntity addCrop(CropEntity crop) {
-
-        if (cropRepository.findByName(crop.getName()).isPresent()) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT,
-                    "Crop already exists with name: " + crop.getName()
-            );
-        }
-
         return cropRepository.save(crop);
     }
 
@@ -44,15 +34,6 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     public FertilizerEntity addFertilizer(FertilizerEntity fertilizer) {
-
-        
-        if (fertilizerRepository.findByName(fertilizer.getName()).isPresent()) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT,
-                    "Fertilizer already exists with name: " + fertilizer.getName()
-            );
-        }
-
         return fertilizerRepository.save(fertilizer);
     }
 
