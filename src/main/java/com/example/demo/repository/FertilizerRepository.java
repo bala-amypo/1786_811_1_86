@@ -10,3 +10,4 @@ public interface FertilizerRepository extends JpaRepository<FertilizerEntity, Lo
 
     List<FertilizerEntity> findByRecommendedForCropsContaining(String cropName);
 }
+
