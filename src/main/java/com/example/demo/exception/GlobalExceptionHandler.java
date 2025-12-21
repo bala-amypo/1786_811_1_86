@@ -16,16 +16,16 @@ public class GlobalExceptionHandler {
         public ResponseEntity<Map<String, Object>> handleResourceNotFound(
                     ResourceNotFoundException ex) {
 
-                            Map<String, Object> response = new HashMap<>();
-                                    response.put("timestamp", LocalDateTime.now());
-                                            response.put("status", HttpStatus.NOT_FOUND.value());
-                                                    response.put("error", "Not Found");
-                                                            response.put("message", ex.getMessage());
+            Map<String, Object> response = new HashMap<>();
+            response.put("timestamp", LocalDateTime.now());
+            response.put("status", HttpStatus.NOT_FOUND.value());
+            response.put("error", "Not Found");
+            response.put("message", ex.getMessage());
 
-                                                                    return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-                                                                        }
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            }
 
-                                                                            @ExceptionHandler(BadRequestException.class)
+            @ExceptionHandler(BadRequestException.class)
                                                                                 public ResponseEntity<Map<String, Object>> handleBadRequest(
                                                                                             BadRequestException ex) {
 
