@@ -8,10 +8,9 @@ import com.example.demo.entity.FertilizerEntity;
 public interface CatalogService {
 
     CropEntity addCrop(CropEntity crop);
-
     List<CropEntity> getAllCrops();
 
+   
     FertilizerEntity addFertilizer(FertilizerEntity fertilizer);
-
     List<FertilizerEntity> getAllFertilizers();
 }
