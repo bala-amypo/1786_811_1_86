@@ -12,10 +12,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<?> handleResponseStatusException(ResponseStatusException ex) {
-        Map<String, Object> body = Map.of(
-                "error", ex.getStatus().getReasonPhrase(),
-                "message", ex.getReason()
-        );
-        return ResponseEntity.status(ex.getStatus()).body(body);
+
+        return ResponseEntity
+                .status(ex.getStatus())
+                .body(Map.of(
+                        "error", ex.getStatus().getReasonPhrase(),
+                        "message", ex.getReason()
+                ));
     }
 }
