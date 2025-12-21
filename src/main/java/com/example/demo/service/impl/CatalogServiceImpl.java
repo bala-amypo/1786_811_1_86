@@ -41,4 +41,5 @@ public class CatalogServiceImpl implements CatalogService {
     public List<FertilizerEntity> getAllFertilizers() {
         return fertilizerRepository.findAll();
     }
+    
 }
