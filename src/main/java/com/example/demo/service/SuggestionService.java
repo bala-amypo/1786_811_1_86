@@ -12,5 +12,5 @@ public interface SuggestionService {
 
     SuggestionEntity getById(Long id);
 
-    void delete(Long id);
+
 }
