@@ -24,6 +24,14 @@ public class FertilizerEntity {
     @Column(nullable = false)
     private String recommendedForCrops;
 
+    public FertilizerEntity(String name,
+                            String npkRatio,
+                            String recommendedForCrops) {
+        this.name = name;
+        this.npkRatio = npkRatio;
+        this.recommendedForCrops = recommendedForCrops;
+    }
+    
     public FertilizerEntity() {}
 
     public String getName() {
