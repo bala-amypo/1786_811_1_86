@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,11 +17,8 @@ import com.example.demo.service.CatalogService;
 @RequestMapping("/catalog")
 public class CatalogController {
 
-    private final CatalogService service;
-
-    public CatalogController(CatalogService service) {
-        this.service = service;
-    }
+    @Autowired
+    private CatalogService service;
 
     @PostMapping("/crops")
     public CropEntity addCrop(@RequestBody CropEntity crop) {
