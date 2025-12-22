@@ -30,6 +30,7 @@ public class CropEntity {
     @Column(nullable = false)
     private String season;
 
+    
     public CropEntity() {}
 
 
