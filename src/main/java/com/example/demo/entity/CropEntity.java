@@ -29,7 +29,18 @@ public class CropEntity {
 
     @Column(nullable = false)
     private String season;
-
+    
+    public CropEntity(String name,
+                      Double suitablePHMin,
+                      Double suitablePHMax,
+                      Double requiredWater,
+                      String season) {
+        this.name = name;
+        this.suitablePHMin = suitablePHMin;
+        this.suitablePHMax = suitablePHMax;
+        this.requiredWater = requiredWater;
+        this.season = season;
+    }
     
     public CropEntity() {}
 
