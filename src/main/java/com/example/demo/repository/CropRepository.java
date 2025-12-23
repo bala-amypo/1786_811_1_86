@@ -9,4 +9,5 @@ import com.example.demo.entity.CropEntity;
 public interface CropRepository extends JpaRepository<CropEntity, Long> {
 
     Optional<CropEntity> findByName(String name);
-}
+    }
+    
