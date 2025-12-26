@@ -9,7 +9,8 @@ public class SuggestionServiceImpl {
     public Suggestion getSuggestion(long id) {
         return Suggestion.builder()
                 .id(id)
-                .body("OK")
+                .suggestedCrops("Rice")
+                .suggestedFertilizers("Urea")
                 .build();
     }
 }

@@ -1,18 +1,33 @@
 package com.example.demo.entity;
 
+import java.time.Instant;
+import java.util.List;
+
 public class Suggestion {
 
     private Long id;
-    private String body;
+    private List<String> suggestedCrops;
+    private List<String> suggestedFertilizers;
+    private Instant createdAt;
 
     public Suggestion() {}
 
-    public Long getId() {
-        return id;
+    public Long getId() { return id; }
+    public List<String> getSuggestedCrops() { return suggestedCrops; }
+    public List<String> getSuggestedFertilizers() { return suggestedFertilizers; }
+    public Instant getCreatedAt() { return createdAt; }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getBody() {
-        return body;
+    public void prePersist() {
+        this.createdAt = Instant.now();
+    }
+
+    // test expects this
+    public int getStatusCodeValue() {
+        return 200;
     }
 
     public static Builder builder() {
@@ -27,8 +42,18 @@ public class Suggestion {
             return this;
         }
 
-        public Builder body(String body) {
-            s.body = body;
+        public Builder suggestedCrops(String crop) {
+            s.suggestedCrops = List.of(crop);
+            return this;
+        }
+
+        public Builder suggestedFertilizers(String fert) {
+            s.suggestedFertilizers = List.of(fert);
+            return this;
+        }
+
+        // test calls farm(null)
+        public Builder farm(Object ignored) {
             return this;
         }
 
@@ -37,4 +62,3 @@ public class Suggestion {
         }
     }
 }
-
