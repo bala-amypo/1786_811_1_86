@@ -1,29 +1,35 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import lombok.*;
-
-@Entity
-@Table(name = "fertilizers")
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Fertilizer {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotBlank
-    @Column(length = 100)
     private String name;
+    private String type;
+    private String description;
 
-    @NotBlank
-    private String npkRatio;
+    public Fertilizer() {
+    }
 
-    @NotBlank
-    @Column(length = 500)
-    private String recommendedForCrops;
+    public Fertilizer(Long id, String name, String type, String description) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.description = description;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
