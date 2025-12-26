@@ -9,7 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CropRequest {
-
     @NotBlank
     private String name;
 

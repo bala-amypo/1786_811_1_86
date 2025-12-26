@@ -9,7 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FarmRequest {
-
     @NotBlank
     private String name;
 
