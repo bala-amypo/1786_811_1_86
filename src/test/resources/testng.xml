@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="CropFertilizerAPISuite" verbose="1" parallel="false">
+
+    <test name="All Functional Tests">
+        <classes>
+            <class name="com.example.demo.AllFunctionalTests"/>
+        </classes>
+    </test>
+
+</suite>
