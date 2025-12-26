@@ -9,17 +9,11 @@ public class SuggestionServiceImpl implements SuggestionService {
 
     @Override
     public Suggestion generateSuggestion(long farmId) {
-        return Suggestion.builder()
-                .suggestedCrops("Rice")
-                .build();
+        return Suggestion.builder().body("ok").build();
     }
 
     @Override
     public Suggestion getSuggestion(long id) {
-        Suggestion s = Suggestion.builder()
-                .suggestedCrops("Rice")
-                .build();
-        s.setId(id);
-        return s;
+        return Suggestion.builder().id(id).body("ok").build();
     }
 }
