@@ -39,3 +39,5 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new BadRequestException("User not found"));
     }
 }
+cd ~/Workspace/demo
+rm -f src/main/java/com/example/demo/CatalogServiceImpl.java
