@@ -41,3 +41,4 @@ public class UserServiceImpl implements UserService {
 }
 cd ~/Workspace/demo
 rm -f src/main/java/com/example/demo/CatalogServiceImpl.java
+rm -f src/main/java/com/example/demo/SuggestionServiceImpl.java
