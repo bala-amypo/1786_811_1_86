@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.service.impl.UserServiceImpl;
+
 import com.example.demo.DemoApplication;
 import com.example.demo.controller.*;
 import com.example.demo.dto.*;
