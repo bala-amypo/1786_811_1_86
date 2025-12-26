@@ -1,36 +1,37 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
-
-@Entity
-@Table(name = "farms")
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Farm {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
+    private String name;
+    private Double soilPH;
+    private Double waterLevel;
+    private String season;
     private User owner;
 
-    @NotBlank
-    @Column(length = 100)
-    private String name;
+    public Farm() {}
 
-    @NotNull
-    private Double soilPH;
+    public String getName() { return name; }
+    public Double getSoilPH() { return soilPH; }
+    public Double getWaterLevel() { return waterLevel; }
+    public String getSeason() { return season; }
 
-    @NotNull
-    private Double waterLevel;
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 
-    @NotBlank
-    private String season;
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private final Farm f = new Farm();
+
+        public Builder name(String name) { f.name = name; return this; }
+        public Builder soilPH(Double soilPH) { f.soilPH = soilPH; return this; }
+        public Builder waterLevel(Double waterLevel) { f.waterLevel = waterLevel; return this; }
+        public Builder season(String season) { f.season = season; return this; }
+
+        public Farm build() { return f; }
+    }
 }

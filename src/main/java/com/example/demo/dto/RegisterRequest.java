@@ -18,4 +18,9 @@ public class RegisterRequest {
 
     @NotBlank
     private String password;
+
+    public String getName() { return name; }
+public String getEmail() { return email; }
+public String getPassword() { return password; }
+
 }
