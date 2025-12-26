@@ -1,35 +1,52 @@
 package com.example.demo.entity;
 
+import java.util.List;
+
 public class Fertilizer {
 
-    private Long id;
     private String name;
-    private String type;
-    private String description;
+    private String npkRatio;
+    private List<String> recommendedForCrops;
 
-    public Fertilizer() {
-    }
-
-    public Fertilizer(Long id, String name, String type, String description) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.description = description;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Fertilizer() {}
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getNpkRatio() {
+        return npkRatio;
+    }
+
+    public List<String> getRecommendedForCrops() {
+        return recommendedForCrops;
+    }
+
+    // 🔹 Builder required by tests
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private final Fertilizer f = new Fertilizer();
+
+        public Builder name(String name) {
+            f.name = name;
+            return this;
+        }
+
+        public Builder npkRatio(String npk) {
+            f.npkRatio = npk;
+            return this;
+        }
+
+        public Builder recommendedForCrops(List<String> crops) {
+            f.recommendedForCrops = crops;
+            return this;
+        }
+
+        public Fertilizer build() {
+            return f;
+        }
     }
 }
