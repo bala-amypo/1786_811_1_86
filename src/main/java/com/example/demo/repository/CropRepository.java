@@ -1,13 +1,24 @@
 package com.example.demo.repository;
 
-import java.util.Optional;
-
+import com.example.demo.entity.Crop;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import com.example.demo.entity.CropEntity;
+import java.util.List;
 
-public interface CropRepository extends JpaRepository<CropEntity, Long> {
+public interface CropRepository extends JpaRepository<Crop, Long> {
 
-    Optional<CropEntity> findByName(String name);
-    }
-    
+    @Query("""
+        SELECT c FROM Crop c
+        WHERE c.suitablePHMin <= :ph
+          AND c.suitablePHMax >= :ph
+          AND c.requiredWater <= :water
+          AND c.season = :season
+    """)
+    List<Crop> findSuitableCrops(
+            @Param("ph") Double ph,
+            @Param("water") Double water,
+            @Param("season") String season
+    );
+}

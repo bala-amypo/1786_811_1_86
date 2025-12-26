@@ -1,15 +1,17 @@
 package com.example.demo.repository;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.example.demo.entity.Fertilizer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import com.example.demo.entity.FertilizerEntity;
+import java.util.List;
 
-public interface FertilizerRepository extends JpaRepository<FertilizerEntity, Long> {
+public interface FertilizerRepository extends JpaRepository<Fertilizer, Long> {
 
-    Optional<FertilizerEntity> findByName(String name);
-
-    List<FertilizerEntity> findByRecommendedForCropsContaining(String cropName);
+    @Query("""
+        SELECT f FROM Fertilizer f
+        WHERE LOWER(f.recommendedForCrops) LIKE LOWER(CONCAT('%', :crop, '%'))
+    """)
+    List<Fertilizer> findByCropName(@Param("crop") String crop);
 }
