@@ -16,7 +16,8 @@ public class SuggestionController {
 
     @GetMapping("/generate/{farmId}")
     public Suggestion generate(@PathVariable Long farmId) {
-        return suggestionService.generate(farmId);
+        // ✅ FIX: call the correct method name
+        return suggestionService.generateSuggestion(farmId);
     }
 
     @GetMapping("/{id}")
