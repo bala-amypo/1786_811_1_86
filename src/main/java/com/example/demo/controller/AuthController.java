@@ -21,13 +21,21 @@ public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
-    // SINGLE constructor → Spring can inject safely
+    // ✅ Constructor used by Spring
     public AuthController(UserService userService,
                           JwtTokenProvider jwtTokenProvider,
                           PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.jwtTokenProvider = jwtTokenProvider;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    // ✅ Constructor REQUIRED by tests
+    public AuthController(UserService userService,
+                          JwtTokenProvider jwtTokenProvider) {
+        this.userService = userService;
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     @PostMapping("/register")
