@@ -1,61 +1,52 @@
-package com.example.demo;
+package com.example.demo.service.impl;
 
-import com.example.demo.entity.Crop;
-import com.example.demo.entity.Fertilizer;
+import com.example.demo.entity.Catalog;
 import com.example.demo.exception.BadRequestException;
-import com.example.demo.repository.CropRepository;
-import com.example.demo.repository.FertilizerRepository;
+import com.example.demo.repository.CatalogRepository;
 import com.example.demo.service.CatalogService;
-import com.example.demo.util.ValidationUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.regex.Pattern;
+import java.util.List;
 
+@Service
 public class CatalogServiceImpl implements CatalogService {
 
-    private static final Pattern NPK_PATTERN =
-            Pattern.compile("^\\d+-\\d+-\\d+$");
+    private final CatalogRepository catalogRepository;
 
-    private final CropRepository cropRepository;
-    private final FertilizerRepository fertilizerRepository;
+    // ✅ Constructor used by Spring
+    @Autowired
+    public CatalogServiceImpl(CatalogRepository catalogRepository) {
+        this.catalogRepository = catalogRepository;
+    }
 
-    public CatalogServiceImpl(CropRepository cropRepository,
-                              FertilizerRepository fertilizerRepository) {
-        this.cropRepository = cropRepository;
-        this.fertilizerRepository = fertilizerRepository;
+    // ✅ Constructor used by unit tests (if needed)
+    public CatalogServiceImpl() {
+        this.catalogRepository = null;
     }
 
     @Override
-    public Crop addCrop(Crop crop) {
-        if (crop.getSuitablePHMin() > crop.getSuitablePHMax()) {
-            throw new BadRequestException("PH min cannot be greater than PH max");
+    public Catalog save(Catalog catalog) {
+        if (catalogRepository == null) {
+            throw new BadRequestException("Repository not initialized");
         }
-        if (!ValidationUtil.validSeason(crop.getSeason())) {
-            throw new BadRequestException("Invalid season");
-        }
-        return cropRepository.save(crop);
+        return catalogRepository.save(catalog);
     }
 
     @Override
-    public Fertilizer addFertilizer(Fertilizer fertilizer) {
-        if (!NPK_PATTERN.matcher(fertilizer.getNpkRatio()).matches()) {
-            throw new BadRequestException("Invalid NPK format");
+    public List<Catalog> findAll() {
+        if (catalogRepository == null) {
+            throw new BadRequestException("Repository not initialized");
         }
-        return fertilizerRepository.save(fertilizer);
+        return catalogRepository.findAll();
     }
 
     @Override
-    public List<Crop> findSuitableCrops(Double ph, Double water, String season) {
-        return cropRepository.findSuitableCrops(ph, water, season);
-    }
-
-    @Override
-    public List<Fertilizer> findFertilizersForCrops(List<String> cropNames) {
-        if (cropNames == null || cropNames.isEmpty()) return List.of();
-        Set<Fertilizer> result = new HashSet<>();
-        for (String c : cropNames) {
-            result.addAll(fertilizerRepository.findByCropName(c));
+    public Catalog findById(long id) {
+        if (catalogRepository == null) {
+            throw new BadRequestException("Repository not initialized");
         }
-        return new ArrayList<>(result);
+        return catalogRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("Catalog not found"));
     }
 }

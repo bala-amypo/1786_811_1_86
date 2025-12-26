@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+public CatalogController(CatalogService catalogService) {
+    this.catalogService = catalogService;
+}
+
+
 @RestController
 @RequestMapping("/catalog")
 public class CatalogController {
