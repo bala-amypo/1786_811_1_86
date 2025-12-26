@@ -18,6 +18,8 @@ public class JwtTokenProvider {
 
     private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
 
+    // ================= TOKEN CREATION =================
+
     public String createToken(Long userId, String email, String role) {
 
         return Jwts.builder()
@@ -32,11 +34,27 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    // ================= TOKEN VALIDATION =================
+
     public Claims validateToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    // ================= METHODS REQUIRED BY TESTS =================
+
+    public String getEmail(String token) {
+        return validateToken(token).getSubject();
+    }
+
+    public Long getUserId(String token) {
+        return validateToken(token).get("userId", Long.class);
+    }
+
+    public String getRole(String token) {
+        return validateToken(token).get("role", String.class);
     }
 }
