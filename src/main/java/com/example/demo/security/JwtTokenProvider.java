@@ -6,55 +6,49 @@ import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
-import java.util.Map;
 
 @Component
 public class JwtTokenProvider {
 
-    private static final String SECRET =
-            "my-super-secret-key-my-super-secret-key";
+    private final Key key =
+            Keys.hmacShaKeyFor("mysecretkeymysecretkeymysecretkey12".getBytes());
 
-    private static final long EXPIRATION = 1000 * 60 * 60;
-
-    private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
-
-    // ================= TOKEN CREATION =================
+    public JwtTokenProvider() {}
 
     public String createToken(Long userId, String email, String role) {
-
         return Jwts.builder()
                 .setSubject(email)
-                .addClaims(Map.of(
-                        "userId", userId,
-                        "role", role
-                ))
+                .claim("userId", userId)
+                .claim("role", role)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    // ================= TOKEN VALIDATION =================
-
-    public Claims validateToken(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    // ================= METHODS REQUIRED BY TESTS =================
-
     public String getEmail(String token) {
-        return validateToken(token).getSubject();
+        return parse(token).getSubject();
     }
 
     public Long getUserId(String token) {
-        return validateToken(token).get("userId", Long.class);
+        return parse(token).get("userId", Long.class);
     }
 
     public String getRole(String token) {
-        return validateToken(token).get("role", String.class);
+        return parse(token).get("role", String.class);
+    }
+
+    private Claims parse(String token) {
+        return Jwts.parserBuilder().setSigningKey(key).build()
+                .parseClaimsJws(token).getBody();
     }
 }
