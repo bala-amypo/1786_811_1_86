@@ -2,23 +2,20 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.Suggestion;
 import com.example.demo.service.SuggestionService;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public class SuggestionServiceImpl implements SuggestionService {
 
-    public SuggestionServiceImpl() {
-    }
+    public SuggestionServiceImpl() {}
 
     @Override
     public Suggestion generateSuggestion(Long farmId) {
-        return Suggestion.builder()
-                .id(1L)
-                .suggestedCrops("Rice")
-                .suggestedFertilizers("Urea")
-                .build();
+        Suggestion s = new Suggestion();
+        s.setId(1L);
+        s.setSuggestedCrops("Rice");
+        s.setSuggestedFertilizers("Urea");
+        return s;
     }
 
     @Override
