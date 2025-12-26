@@ -6,7 +6,6 @@ import com.example.demo.entity.Fertilizer;
 import com.example.demo.exception.BadRequestException;
 import com.example.demo.repository.CatalogRepository;
 import com.example.demo.service.CatalogService;
-import com.example.demo.util.BodyList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,33 +36,21 @@ public class CatalogServiceImpl implements CatalogService {
         throw new BadRequestException("Catalog not found");
     }
 
+    // ✅ ONLY ONE COPY — DO NOT DUPLICATE
     @Override
     public List<Crop> findSuitableCrops(Double temperature, Double rainfall, String soilType) {
-        List<Crop> list = new ArrayList<>();
-        Crop crop = Crop.builder()
-                .name("Rice")
-                .build();
-        list.add(crop);
-        return list;
+        List<Crop> crops = new ArrayList<>();
+        crops.add(Crop.builder().name("Rice").build());
+        return crops;
     }
 
+    // ✅ ONLY ONE COPY — DO NOT DUPLICATE
     @Override
     public List<Fertilizer> findFertilizersForCrops(List<Crop> crops) {
-        List<Fertilizer> list = new ArrayList<>();
-        Fertilizer fert = Fertilizer.builder()
-                .name("Urea")
-                .build();
-        list.add(fert);
-        return list;
+        List<Fertilizer> fertilizers = new ArrayList<>();
+        fertilizers.add(Fertilizer.builder().name("Urea").build());
+        return fertilizers;
     }
-
-
-@Override
-public List<Fertilizer> findFertilizersForCrops(List<Crop> crops) {
-    BodyList<Fertilizer> list = new BodyList<>();
-    list.add(Fertilizer.builder().name("Urea").build());
-    return list;
-}
 
     @Override
     public void addCrop(Crop crop) {
