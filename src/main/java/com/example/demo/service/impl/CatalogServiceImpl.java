@@ -9,29 +9,16 @@ import com.example.demo.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-
 
 @Service
 public class CatalogServiceImpl implements CatalogService {
 
-     private final List<Crop> crops = new ArrayList<>();
-private final List<Fertilizer> fertilizers = new ArrayList<>();
-
-@Override
-public void addCrop(Crop crop) {
-    crops.add(crop);
-}
-
-@Override
-public void addFertilizer(Fertilizer fertilizer) {
-    fertilizers.add(fertilizer);
-}
-
-
     private final CatalogRepository catalogRepository;
+    private final List<Crop> crops = new ArrayList<>();
+    private final List<Fertilizer> fertilizers = new ArrayList<>();
 
     @Autowired
     public CatalogServiceImpl(CatalogRepository catalogRepository) {
@@ -54,40 +41,23 @@ public void addFertilizer(Fertilizer fertilizer) {
                 .orElseThrow(() -> new BadRequestException("Catalog not found"));
     }
 
-    // =====================================================
-    // FIXED IMPLEMENTATIONS (NO INVALID CONSTRUCTORS)
-    // =====================================================
-
     @Override
-    public List<Crop> findSuitableCrops(Double temperature,
-                                        Double rainfall,
-                                        String soilType) {
-
-        return catalogRepository.findAll()
-                .stream()
-                .map(c -> {
-                    Crop crop = new Crop();
-                    crop.setName(c.getCrop());
-                    return crop;
-                })
-                .collect(Collectors.toList());
+    public List<Crop> findSuitableCrops(Double temperature, Double rainfall, String soilType) {
+        return crops;
     }
 
     @Override
     public List<Fertilizer> findFertilizersForCrops(List<Crop> crops) {
+        return fertilizers;
+    }
 
-        List<String> cropNames = crops.stream()
-                .map(Crop::getName)
-                .collect(Collectors.toList());
+    @Override
+    public void addCrop(Crop crop) {
+        crops.add(crop);
+    }
 
-        return catalogRepository.findAll()
-                .stream()
-                .filter(c -> cropNames.contains(c.getCrop()))
-                .map(c -> {
-                    Fertilizer f = new Fertilizer();
-                    f.setName(c.getFertilizer());
-                    return f;
-                })
-                .collect(Collectors.toList());
+    @Override
+    public void addFertilizer(Fertilizer fertilizer) {
+        fertilizers.add(fertilizer);
     }
 }
