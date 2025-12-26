@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Catalog;
+import com.example.demo.entity.Crop;
+import com.example.demo.entity.Fertilizer;
 
 import java.util.List;
 
@@ -12,9 +14,8 @@ public interface CatalogService {
 
     Catalog findById(long id);
 
-    // 🔹 REQUIRED BY SuggestionService
-    List<String> findSuitableCrops(Double temperature, Double rainfall, String soilType);
+    // REQUIRED BY SuggestionService
+    List<Crop> findSuitableCrops(Double temperature, Double rainfall, String soilType);
 
-    // 🔹 REQUIRED BY SuggestionService
-    List<String> findFertilizersForCrops(List<String> crops);
+    List<Fertilizer> findFertilizersForCrops(List<Crop> crops);
 }

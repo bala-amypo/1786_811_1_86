@@ -1,6 +1,8 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.Catalog;
+import com.example.demo.entity.Crop;
+import com.example.demo.entity.Fertilizer;
 import com.example.demo.exception.BadRequestException;
 import com.example.demo.repository.CatalogRepository;
 import com.example.demo.service.CatalogService;
@@ -36,26 +38,29 @@ public class CatalogServiceImpl implements CatalogService {
                 .orElseThrow(() -> new BadRequestException("Catalog not found"));
     }
 
-    // ======================================================
-    // METHODS REQUIRED BY SuggestionService
-    // ======================================================
+    // =================================================
+    // REQUIRED BY SuggestionService
+    // =================================================
 
     @Override
-    public List<String> findSuitableCrops(Double temperature, Double rainfall, String soilType) {
-        // Simple implementation for tests
+    public List<Crop> findSuitableCrops(Double temperature, Double rainfall, String soilType) {
         return catalogRepository.findAll()
                 .stream()
-                .map(Catalog::getCrop)
+                .map(c -> new Crop(c.getCrop()))
                 .distinct()
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<String> findFertilizersForCrops(List<String> crops) {
+    public List<Fertilizer> findFertilizersForCrops(List<Crop> crops) {
+        List<String> cropNames = crops.stream()
+                .map(Crop::getName)
+                .collect(Collectors.toList());
+
         return catalogRepository.findAll()
                 .stream()
-                .filter(c -> crops.contains(c.getCrop()))
-                .map(Catalog::getFertilizer)
+                .filter(c -> cropNames.contains(c.getCrop()))
+                .map(c -> new Fertilizer(c.getFertilizer()))
                 .distinct()
                 .collect(Collectors.toList());
     }
