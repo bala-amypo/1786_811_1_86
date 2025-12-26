@@ -16,11 +16,13 @@ public class Farm {
     private Long id;
 
     private String name;
+
     private Double soilPH;
+
     private Double waterLevel;
+
     private String season;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @ManyToOne
     private User owner;
 }

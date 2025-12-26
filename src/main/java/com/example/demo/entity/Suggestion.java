@@ -3,8 +3,6 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "suggestions")
 @Data
@@ -18,17 +16,9 @@ public class Suggestion {
     private Long id;
 
     private String suggestedCrops;
+
     private String suggestedFertilizers;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "farm_id")
+    @ManyToOne
     private Farm farm;
-
-    private LocalDateTime createdAt;
-
-    @PrePersist
-    public void prePersist() {
-        this.createdAt = LocalDateTime.now();
-    }
 }
-

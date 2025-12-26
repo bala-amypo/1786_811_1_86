@@ -16,6 +16,8 @@ public class Fertilizer {
     private Long id;
 
     private String name;
+
     private String npkRatio;
+
     private String recommendedForCrops;
 }
