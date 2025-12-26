@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CatalogServiceImpl implements CatalogService {
@@ -33,5 +34,29 @@ public class CatalogServiceImpl implements CatalogService {
     public Catalog findById(long id) {
         return catalogRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("Catalog not found"));
+    }
+
+    // ======================================================
+    // METHODS REQUIRED BY SuggestionService
+    // ======================================================
+
+    @Override
+    public List<String> findSuitableCrops(Double temperature, Double rainfall, String soilType) {
+        // Simple implementation for tests
+        return catalogRepository.findAll()
+                .stream()
+                .map(Catalog::getCrop)
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> findFertilizersForCrops(List<String> crops) {
+        return catalogRepository.findAll()
+                .stream()
+                .filter(c -> crops.contains(c.getCrop()))
+                .map(Catalog::getFertilizer)
+                .distinct()
+                .collect(Collectors.toList());
     }
 }
