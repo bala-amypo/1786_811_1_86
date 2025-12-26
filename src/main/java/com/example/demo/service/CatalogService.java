@@ -6,6 +6,14 @@ import com.example.demo.entity.Fertilizer;
 
 import java.util.List;
 
+import com.example.demo.entity.Crop;
+import com.example.demo.entity.Fertilizer;
+
+void addCrop(Crop crop);
+
+void addFertilizer(Fertilizer fertilizer);
+
+
 public interface CatalogService {
 
     Catalog save(Catalog catalog);
