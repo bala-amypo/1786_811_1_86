@@ -1,30 +1,40 @@
 package com.example.demo.entity;
 
-import java.util.List;
-
 public class Suggestion {
 
-    private List<String> suggestedCrops;
-    private List<String> suggestedFertilizers;
+    private Long id;
+    private String body;
 
-    public List<String> getSuggestedCrops() { return suggestedCrops; }
-    public List<String> getSuggestedFertilizers() { return suggestedFertilizers; }
+    public Suggestion() {}
 
-    public static Builder builder() { return new Builder(); }
+    public Long getId() {
+        return id;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
 
     public static class Builder {
         private final Suggestion s = new Suggestion();
 
-        public Builder suggestedCrops(String crop) {
-            s.suggestedCrops = List.of(crop);
+        public Builder id(long id) {
+            s.id = id;
             return this;
         }
 
-        public Builder suggestedFertilizers(String fertilizer) {
-            s.suggestedFertilizers = List.of(fertilizer);
+        public Builder body(String body) {
+            s.body = body;
             return this;
         }
 
-        public Suggestion build() { return s; }
+        public Suggestion build() {
+            return s;
+        }
     }
 }
+
