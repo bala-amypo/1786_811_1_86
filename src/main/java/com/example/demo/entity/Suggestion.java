@@ -6,23 +6,21 @@ import java.util.List;
 public class Suggestion {
 
     private Long id;
-    private String body;
+    private List<String> suggestedCrops;
     private Instant createdAt;
-    private List<Crop> crops;
 
     public Suggestion() {}
 
     public Long getId() { return id; }
-    public String getBody() { return body; }
-    public List<Crop> getCrops() { return crops; }
+    public void setId(long id) { this.id = id; }
 
     // 🔥 REQUIRED BY TESTS
-    public int getStatusCodeValue() {
-        return 200;
+    public List<String> getSuggestedCrops() {
+        return suggestedCrops;
     }
 
-    public void prePersist() {
-        this.createdAt = Instant.now();
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
     public static Builder builder() {
@@ -32,27 +30,19 @@ public class Suggestion {
     public static class Builder {
         private final Suggestion s = new Suggestion();
 
-        public Builder id(long id) {
-            s.id = id;
+        // 🔥 REQUIRED BY TESTS
+        public Builder suggestedCrops(String crop) {
+            s.suggestedCrops = List.of(crop);
             return this;
         }
 
-        public Builder body(String body) {
-            s.body = body;
-            return this;
-        }
-
-        public Builder crops(List<Crop> crops) {
-            s.crops = crops;
-            return this;
-        }
-
-        // 🔥 DUMMY method required by tests
-        public Builder farm(Object ignored) {
+        public Builder suggestedCrops(List<String> crops) {
+            s.suggestedCrops = crops;
             return this;
         }
 
         public Suggestion build() {
+            s.createdAt = Instant.now();
             return s;
         }
     }
