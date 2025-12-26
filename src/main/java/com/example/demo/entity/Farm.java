@@ -1,7 +1,12 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "farms")
 public class Farm {
@@ -21,58 +26,4 @@ public class Farm {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User owner;
-
-    public Farm() {}
-
-    // ===== GETTERS =====
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Double getSoilPH() {
-        return soilPH;
-    }
-
-    public Double getWaterLevel() {
-        return waterLevel;
-    }
-
-    public String getSeason() {
-        return season;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    // ===== SETTERS =====
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSoilPH(Double soilPH) {
-        this.soilPH = soilPH;
-    }
-
-    public void setWaterLevel(Double waterLevel) {
-        this.waterLevel = waterLevel;
-    }
-
-    public void setSeason(String season) {
-        this.season = season;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
 }
