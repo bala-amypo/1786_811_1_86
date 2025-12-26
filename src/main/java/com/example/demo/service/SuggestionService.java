@@ -4,7 +4,7 @@ import com.example.demo.entity.Suggestion;
 
 public interface SuggestionService {
 
-    Suggestion generateSuggestion(long farmId);
+    Suggestion generate(Long farmId);
 
     Suggestion getSuggestion(long id);
 }

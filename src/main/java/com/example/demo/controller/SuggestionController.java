@@ -18,4 +18,9 @@ public class SuggestionController {
     public Suggestion generate(@PathVariable Long farmId) {
         return suggestionService.generate(farmId);
     }
+
+    @GetMapping("/{id}")
+    public Suggestion getSuggestion(@PathVariable long id) {
+        return suggestionService.getSuggestion(id);
+    }
 }
