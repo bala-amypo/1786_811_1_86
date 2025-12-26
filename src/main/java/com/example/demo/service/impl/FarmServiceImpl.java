@@ -1,37 +1,57 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.FarmEntity;
+import com.example.demo.entity.Farm;
+import com.example.demo.entity.User;
+import com.example.demo.exception.BadRequestException;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.FarmRepository;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.FarmService;
+import com.example.demo.util.ValidationUtil;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class FarmServiceImpl implements FarmService {
 
-    private final FarmRepository repository;
+    private final FarmRepository farmRepository;
+    private final UserRepository userRepository;
 
-    public FarmServiceImpl(FarmRepository repository) {
-        this.repository = repository;
+    public FarmServiceImpl(FarmRepository farmRepository,
+                           UserRepository userRepository) {
+        this.farmRepository = farmRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public FarmEntity create(FarmEntity farm) {
-        return repository.save(farm);
+    public Farm createFarm(Farm farm, Long ownerId) {
+
+        if (farm.getSoilPH() < 3.0 || farm.getSoilPH() > 10.0) {
+            throw new IllegalArgumentException("Invalid pH value");
+        }
+
+        if (!ValidationUtil.validSeason(farm.getSeason())) {
+            throw new BadRequestException("Invalid season");
+        }
+
+        User owner = userRepository.findById(ownerId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        farm.setOwner(owner);
+        return farmRepository.save(farm);
     }
 
     @Override
-    public List<FarmEntity> getAll() {
-        return repository.findAll();
+    public List<Farm> getFarmsByOwner(Long ownerId) {
+        return farmRepository.findByOwnerId(ownerId);
     }
 
     @Override
-    public FarmEntity getById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Farm not found with id: " + id));
+    public Farm getFarmById(Long farmId) {
+        return farmRepository.findById(farmId)
+                .orElseThrow(() -> new ResourceNotFoundException("Farm not found"));
     }
-
-    
 }

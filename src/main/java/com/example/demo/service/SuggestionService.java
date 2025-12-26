@@ -1,16 +1,14 @@
 package com.example.demo.service;
 
-import java.util.List;
+import com.example.demo.entity.Suggestion;
 
-import com.example.demo.entity.SuggestionEntity;
+import java.util.List;
 
 public interface SuggestionService {
 
-    SuggestionEntity create(SuggestionEntity suggestion);
+    Suggestion generateSuggestion(Long farmId);
 
-    List<SuggestionEntity> getAll();
+    Suggestion getSuggestion(Long suggestionId);
 
-    SuggestionEntity getById(Long id);
-
-
+    List<Suggestion> getSuggestionsByFarm(Long farmId);
 }

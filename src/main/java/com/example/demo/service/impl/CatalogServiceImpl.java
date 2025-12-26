@@ -1,19 +1,24 @@
 package com.example.demo.service.impl;
 
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
-import com.example.demo.entity.CropEntity;
-import com.example.demo.entity.FertilizerEntity;
+import com.example.demo.entity.Crop;
+import com.example.demo.entity.Fertilizer;
+import com.example.demo.exception.BadRequestException;
 import com.example.demo.repository.CropRepository;
 import com.example.demo.repository.FertilizerRepository;
 import com.example.demo.service.CatalogService;
+import com.example.demo.util.ValidationUtil;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+import java.util.regex.Pattern;
 
 @Service
+@Transactional
 public class CatalogServiceImpl implements CatalogService {
+
+    private static final Pattern NPK_PATTERN =
+            Pattern.compile("^\\d+-\\d+-\\d+$");
 
     private final CropRepository cropRepository;
     private final FertilizerRepository fertilizerRepository;
@@ -25,38 +30,47 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
-    public CropEntity addCrop(CropEntity crop) {
+    public Crop addCrop(Crop crop) {
 
-        if (cropRepository.findByName(crop.getName()).isPresent()) {
-            throw new ResponseStatusException(
-                HttpStatus.CONFLICT,
-                "Crop already exists with name: " + crop.getName()
-            );
+        if (crop.getSuitablePHMin() > crop.getSuitablePHMax()) {
+            throw new BadRequestException("PH min cannot be greater than PH max");
+        }
+
+        if (!ValidationUtil.validSeason(crop.getSeason())) {
+            throw new BadRequestException("Invalid season");
         }
 
         return cropRepository.save(crop);
     }
 
     @Override
-    public List<CropEntity> getAllCrops() {
-        return cropRepository.findAll();
-    }
+    public Fertilizer addFertilizer(Fertilizer fertilizer) {
 
-    @Override
-    public FertilizerEntity addFertilizer(FertilizerEntity fertilizer) {
-
-        if (fertilizerRepository.findByName(fertilizer.getName()).isPresent()) {
-            throw new ResponseStatusException(
-                HttpStatus.CONFLICT,
-                "Fertilizer already exists with name: " + fertilizer.getName()
-            );
+        if (!NPK_PATTERN.matcher(fertilizer.getNpkRatio()).matches()) {
+            throw new BadRequestException("Invalid NPK format");
         }
 
         return fertilizerRepository.save(fertilizer);
     }
 
     @Override
-    public List<FertilizerEntity> getAllFertilizers() {
-        return fertilizerRepository.findAll();
+    public List<Crop> findSuitableCrops(Double ph, Double waterLevel, String season) {
+        return cropRepository.findSuitableCrops(ph, waterLevel, season);
+    }
+
+    @Override
+    public List<Fertilizer> findFertilizersForCrops(List<String> cropNames) {
+
+        if (cropNames == null || cropNames.isEmpty()) {
+            return List.of();
+        }
+
+        Set<Fertilizer> result = new HashSet<>();
+
+        for (String crop : cropNames) {
+            result.addAll(fertilizerRepository.findByCropName(crop));
+        }
+
+        return new ArrayList<>(result);
     }
 }

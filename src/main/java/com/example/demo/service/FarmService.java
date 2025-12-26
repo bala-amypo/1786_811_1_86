@@ -1,15 +1,14 @@
 package com.example.demo.service;
 
-import java.util.List;
+import com.example.demo.entity.Farm;
 
-import com.example.demo.entity.FarmEntity;
+import java.util.List;
 
 public interface FarmService {
 
-    FarmEntity create(FarmEntity farm);
+    Farm createFarm(Farm farm, Long ownerId);
 
-    List<FarmEntity> getAll();
+    List<Farm> getFarmsByOwner(Long ownerId);
 
-    FarmEntity getById(Long id);
-
+    Farm getFarmById(Long farmId);
 }
