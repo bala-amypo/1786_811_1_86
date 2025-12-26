@@ -38,21 +38,28 @@ public class CatalogServiceImpl implements CatalogService {
                 .orElseThrow(() -> new BadRequestException("Catalog not found"));
     }
 
-    // =================================================
-    // REQUIRED BY SuggestionService
-    // =================================================
+    // =====================================================
+    // FIXED IMPLEMENTATIONS (NO INVALID CONSTRUCTORS)
+    // =====================================================
 
     @Override
-    public List<Crop> findSuitableCrops(Double temperature, Double rainfall, String soilType) {
+    public List<Crop> findSuitableCrops(Double temperature,
+                                        Double rainfall,
+                                        String soilType) {
+
         return catalogRepository.findAll()
                 .stream()
-                .map(c -> new Crop(c.getCrop()))
-                .distinct()
+                .map(c -> {
+                    Crop crop = new Crop();
+                    crop.setName(c.getCrop());
+                    return crop;
+                })
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Fertilizer> findFertilizersForCrops(List<Crop> crops) {
+
         List<String> cropNames = crops.stream()
                 .map(Crop::getName)
                 .collect(Collectors.toList());
@@ -60,8 +67,11 @@ public class CatalogServiceImpl implements CatalogService {
         return catalogRepository.findAll()
                 .stream()
                 .filter(c -> cropNames.contains(c.getCrop()))
-                .map(c -> new Fertilizer(c.getFertilizer()))
-                .distinct()
+                .map(c -> {
+                    Fertilizer f = new Fertilizer();
+                    f.setName(c.getFertilizer());
+                    return f;
+                })
                 .collect(Collectors.toList());
     }
 }
