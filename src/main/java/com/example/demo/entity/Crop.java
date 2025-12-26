@@ -4,11 +4,15 @@ public class Crop {
 
     private Long id;
     private String name;
+    private double suitablePHMin;
+    private double suitablePHMax;
 
     public Crop() {}
 
     public Long getId() { return id; }
     public String getName() { return name; }
+    public double getSuitablePHMin() { return suitablePHMin; }
+    public double getSuitablePHMax() { return suitablePHMax; }
 
     public void setId(Long id) { this.id = id; }
     public void setName(String name) { this.name = name; }
@@ -27,6 +31,18 @@ public class Crop {
 
         public Builder name(String name) {
             c.name = name;
+            return this;
+        }
+
+        // 🔥 REQUIRED BY TESTS
+        public Builder suitablePHMin(double v) {
+            c.suitablePHMin = v;
+            return this;
+        }
+
+        // 🔥 REQUIRED BY TESTS
+        public Builder suitablePHMax(double v) {
+            c.suitablePHMax = v;
             return this;
         }
 
