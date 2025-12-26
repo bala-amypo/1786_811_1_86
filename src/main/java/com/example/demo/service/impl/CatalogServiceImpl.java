@@ -1,56 +1,40 @@
-package com.example.demo.service.impl;
+package com.example.demo;
 
 import com.example.demo.entity.Crop;
 import com.example.demo.entity.Fertilizer;
 import com.example.demo.service.CatalogService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-@Transactional
+/**
+ * Test-facing wrapper for CatalogServiceImpl.
+ * DO NOT DELETE — tests depend on this exact class & package.
+ */
 public class CatalogServiceImpl implements CatalogService {
 
-    // ✅ REQUIRED by TestNG (manual instantiation)
+    private final com.example.demo.service.impl.CatalogServiceImpl delegate;
+
     public CatalogServiceImpl() {
+        this.delegate = new com.example.demo.service.impl.CatalogServiceImpl();
     }
 
     @Override
     public Crop addCrop(Crop crop) {
-        // tests only check that method exists and returns Crop
-        return crop;
+        return delegate.addCrop(crop);
     }
 
     @Override
     public Fertilizer addFertilizer(Fertilizer fertilizer) {
-        // tests only check that method exists and returns Fertilizer
-        return fertilizer;
+        return delegate.addFertilizer(fertilizer);
     }
 
     @Override
     public List<Crop> findSuitableCrops(Double ph, Double water, String season) {
-        return List.of(
-                Crop.builder()
-                        .id(1L)
-                        .name("Rice")
-                        .season("Kharif")
-                        .suitablePHMin(5.5)
-                        .suitablePHMax(7.0)
-                        .requiredWater(40.0)
-                        .build()
-        );
+        return delegate.findSuitableCrops(ph, water, season);
     }
 
     @Override
     public List<Fertilizer> findFertilizersForCrops(List<String> cropNames) {
-        return List.of(
-                Fertilizer.builder()
-                        .id(1L)
-                        .name("Urea")
-                        .npkRatio("46-0-0")
-                        .recommendedForCrops(String.join(",", cropNames))
-                        .build()
-        );
+        return delegate.findFertilizersForCrops(cropNames);
     }
 }
