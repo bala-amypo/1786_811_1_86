@@ -1,14 +1,26 @@
 package com.example.demo;
 
-import com.example.demo.entity.Crop;
-import com.example.demo.entity.Fertilizer;
+import com.example.demo.entity.*;
+import com.example.demo.repository.*;
 import com.example.demo.service.CatalogService;
 
 import java.util.List;
 
 public class CatalogServiceImpl implements CatalogService {
 
-    public CatalogServiceImpl() {}
+    private final CropRepository cropRepo;
+    private final FertilizerRepository fertRepo;
+
+    public CatalogServiceImpl(CropRepository cropRepo,
+                              FertilizerRepository fertRepo) {
+        this.cropRepo = cropRepo;
+        this.fertRepo = fertRepo;
+    }
+
+    public CatalogServiceImpl() {
+        this.cropRepo = null;
+        this.fertRepo = null;
+    }
 
     @Override
     public Crop addCrop(Crop crop) {
@@ -16,29 +28,17 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
-    public Fertilizer addFertilizer(Fertilizer fertilizer) {
-        return fertilizer;
+    public Fertilizer addFertilizer(Fertilizer f) {
+        return f;
     }
 
     @Override
     public List<Crop> findSuitableCrops(Double ph, Double water, String season) {
-        Crop c = new Crop();
-        c.setId(1L);
-        c.setName("Rice");
-        c.setSeason("Kharif");
-        c.setSuitablePHMin(5.5);
-        c.setSuitablePHMax(7.0);
-        c.setRequiredWater(40.0);
-        return List.of(c);
+        return List.of();
     }
 
     @Override
     public List<Fertilizer> findFertilizersForCrops(List<String> cropNames) {
-        Fertilizer f = new Fertilizer();
-        f.setId(1L);
-        f.setName("Urea");
-        f.setNpkRatio("46-0-0");
-        f.setRecommendedForCrops(String.join(",", cropNames));
-        return List.of(f);
+        return List.of();
     }
 }

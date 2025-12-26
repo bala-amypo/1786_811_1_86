@@ -2,13 +2,13 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "suggestions")
 public class Suggestion {
 
     @Id
@@ -16,10 +16,15 @@ public class Suggestion {
     private Long id;
 
     private String suggestedCrops;
-
     private String suggestedFertilizers;
 
     @ManyToOne
-    @JoinColumn(name = "farm_id")
     private Farm farm;
+
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
 }

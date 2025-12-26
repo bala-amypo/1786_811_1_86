@@ -1,7 +1,6 @@
 package com.example.demo.dto;
 
 public class FarmRequest {
-
     private String name;
     private Double soilPH;
     private Double waterLevel;
@@ -9,35 +8,15 @@ public class FarmRequest {
 
     public FarmRequest() {}
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public FarmRequest(String name, double ph, double water, String season) {
         this.name = name;
-    }
-
-    public Double getSoilPH() {
-        return soilPH;
-    }
-
-    public void setSoilPH(Double soilPH) {
-        this.soilPH = soilPH;
-    }
-
-    public Double getWaterLevel() {
-        return waterLevel;
-    }
-
-    public void setWaterLevel(Double waterLevel) {
-        this.waterLevel = waterLevel;
-    }
-
-    public String getSeason() {
-        return season;
-    }
-
-    public void setSeason(String season) {
+        this.soilPH = ph;
+        this.waterLevel = water;
         this.season = season;
     }
+
+    public String getName() { return name; }
+    public Double getSoilPH() { return soilPH; }
+    public Double getWaterLevel() { return waterLevel; }
+    public String getSeason() { return season; }
 }
