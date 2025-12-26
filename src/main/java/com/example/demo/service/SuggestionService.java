@@ -1,12 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Suggestion;
-import java.util.List;
 
 public interface SuggestionService {
 
-    // Called by SuggestionController
-    List<Suggestion> generateSuggestion(Long farmId);
-
-    Suggestion getSuggestion(Long suggestionId);
+    // REQUIRED by tests & controller
+    Suggestion generate(Long farmId);
 }

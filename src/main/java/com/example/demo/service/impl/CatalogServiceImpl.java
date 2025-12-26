@@ -17,6 +17,20 @@ import java.util.stream.Collectors;
 @Service
 public class CatalogServiceImpl implements CatalogService {
 
+     private final List<Crop> crops = new ArrayList<>();
+private final List<Fertilizer> fertilizers = new ArrayList<>();
+
+@Override
+public void addCrop(Crop crop) {
+    crops.add(crop);
+}
+
+@Override
+public void addFertilizer(Fertilizer fertilizer) {
+    fertilizers.add(fertilizer);
+}
+
+
     private final CatalogRepository catalogRepository;
 
     @Autowired
