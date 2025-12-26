@@ -6,16 +6,18 @@ import com.example.demo.service.SuggestionService;
 public class SuggestionServiceImpl implements SuggestionService {
 
     @Override
-    public Suggestion generate(Long farmId) {
-        Suggestion s = new Suggestion();
-        s.setBody("Generated for farm " + farmId);
-        return s;
+    public Suggestion generateSuggestion(long farmId) {
+        return Suggestion.builder()
+                .id(1L)
+                .body("Generated")
+                .build();
     }
 
     @Override
     public Suggestion getSuggestion(long id) {
-        Suggestion s = new Suggestion();
-        s.setBody("Suggestion " + id);
-        return s;
+        return Suggestion.builder()
+                .id(id)
+                .body("Fetched")
+                .build();
     }
 }

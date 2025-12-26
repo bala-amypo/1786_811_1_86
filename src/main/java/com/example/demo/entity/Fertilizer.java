@@ -4,25 +4,21 @@ import java.util.List;
 
 public class Fertilizer {
 
+    private Long id;
     private String name;
     private String npkRatio;
     private List<String> recommendedForCrops;
 
     public Fertilizer() {}
 
-    public String getName() {
-        return name;
-    }
+    public Long getId() { return id; }
+    public String getName() { return name; }
+    public String getNpkRatio() { return npkRatio; }
+    public List<String> getRecommendedForCrops() { return recommendedForCrops; }
 
-    public String getNpkRatio() {
-        return npkRatio;
-    }
+    public void setId(Long id) { this.id = id; }
 
-    public List<String> getRecommendedForCrops() {
-        return recommendedForCrops;
-    }
-
-    // 🔹 Builder required by tests
+    // ===== BUILDER =====
     public static Builder builder() {
         return new Builder();
     }
@@ -30,13 +26,18 @@ public class Fertilizer {
     public static class Builder {
         private final Fertilizer f = new Fertilizer();
 
+        public Builder id(long id) {
+            f.id = id;
+            return this;
+        }
+
         public Builder name(String name) {
             f.name = name;
             return this;
         }
 
-        public Builder npkRatio(String npk) {
-            f.npkRatio = npk;
+        public Builder npkRatio(String r) {
+            f.npkRatio = r;
             return this;
         }
 
