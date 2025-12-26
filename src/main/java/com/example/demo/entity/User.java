@@ -22,14 +22,12 @@ public class User {
     public void setPassword(String password) { this.password = password; }
     public void setRole(String role) { this.role = role; }
 
-    // 🔥 REQUIRED BY AuthController
-    public static Builder builder() {
-        return new Builder();
-    }
+    public static Builder builder() { return new Builder(); }
 
     public static class Builder {
         private final User u = new User();
 
+        public Builder id(long id) { u.id = id; return this; }
         public Builder name(String name) { u.name = name; return this; }
         public Builder email(String email) { u.email = email; return this; }
         public Builder password(String password) { u.password = password; return this; }

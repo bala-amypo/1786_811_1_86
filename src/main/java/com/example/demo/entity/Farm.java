@@ -11,22 +11,20 @@ public class Farm {
 
     public Farm() {}
 
+    public Long getId() { return id; }
     public String getName() { return name; }
     public Double getSoilPH() { return soilPH; }
     public Double getWaterLevel() { return waterLevel; }
     public String getSeason() { return season; }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
+    public void setOwner(User owner) { this.owner = owner; }
 
-    public static Builder builder() {
-        return new Builder();
-    }
+    public static Builder builder() { return new Builder(); }
 
     public static class Builder {
         private final Farm f = new Farm();
 
+        public Builder id(long id) { f.id = id; return this; }
         public Builder name(String name) { f.name = name; return this; }
         public Builder soilPH(Double soilPH) { f.soilPH = soilPH; return this; }
         public Builder waterLevel(Double waterLevel) { f.waterLevel = waterLevel; return this; }
