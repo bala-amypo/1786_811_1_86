@@ -16,7 +16,7 @@ public class AuthController {
     private final UserService userService;
     private final JwtTokenProvider jwtTokenProvider;
 
-    // ✅ CONSTRUCTOR EXACTLY AS TEST EXPECTS
+    // ✅ Constructor exactly as tests expect
     public AuthController(UserService userService,
                           JwtTokenProvider jwtTokenProvider) {
         this.userService = userService;
@@ -26,33 +26,31 @@ public class AuthController {
     // ================= REGISTER =================
     @PostMapping("/register")
     public ResponseEntity<AuthResponseDto> register(
-            @RequestBody RegisterRequestDto req) {
+            @RequestBody RegisterRequestDto request) {
 
         User user = new User();
-        user.setName(req.getName());
-        user.setEmail(req.getEmail());
-        user.setPassword(req.getPassword());
+        user.setName(request.getName());
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
         user.setRole("FARMER");
 
-        User saved = userService.register(user);
+        User savedUser = userService.register(user);
 
         String token = jwtTokenProvider.createToken(
-                saved.getId(),
-                saved.getEmail(),
-                saved.getRole()
+                savedUser.getId(),
+                savedUser.getEmail(),
+                savedUser.getRole()
         );
 
-        return ResponseEntity.ok(
-                new AuthResponseDto(token)
-        );
+        return ResponseEntity.ok(new AuthResponseDto(token));
     }
 
     // ================= LOGIN =================
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDto> login(
-            @RequestBody AuthRequestDto req) {
+            @RequestBody AuthRequestDto request) {
 
-        User user = userService.findByEmail(req.getEmail());
+        User user = userService.findByEmail(request.getEmail());
 
         String token = jwtTokenProvider.createToken(
                 user.getId(),
@@ -60,8 +58,7 @@ public class AuthController {
                 user.getRole()
         );
 
-        return ResponseEntity.ok(
-                new AuthResponseDto(token)
-        );
+        return ResponseEntity.ok(new AuthResponseDto(token));
     }
 }
+
