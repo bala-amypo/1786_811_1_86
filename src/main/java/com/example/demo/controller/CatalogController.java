@@ -12,23 +12,22 @@ public class CatalogController {
 
     private final CatalogService catalogService;
 
-    // Constructor injection
     public CatalogController(CatalogService catalogService) {
         this.catalogService = catalogService;
     }
 
     @PostMapping
-    public Catalog createCatalog(@RequestBody Catalog catalog) {
+    public Catalog create(@RequestBody Catalog catalog) {
         return catalogService.save(catalog);
     }
 
     @GetMapping
-    public List<Catalog> getAllCatalogs() {
+    public List<Catalog> getAll() {
         return catalogService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Catalog getCatalogById(@PathVariable long id) {
+    public Catalog getById(@PathVariable long id) {
         return catalogService.findById(id);
     }
 }
