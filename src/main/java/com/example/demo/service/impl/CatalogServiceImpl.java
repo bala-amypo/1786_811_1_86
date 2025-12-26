@@ -6,6 +6,7 @@ import com.example.demo.entity.Fertilizer;
 import com.example.demo.exception.BadRequestException;
 import com.example.demo.repository.CatalogRepository;
 import com.example.demo.service.CatalogService;
+import com.example.demo.util.BodyList;
 
 import java.util.ArrayList;
 import java.util.List;
