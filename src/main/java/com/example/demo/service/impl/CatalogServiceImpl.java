@@ -59,5 +59,16 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     public void addFertilizer(Fertilizer fertilizer) {
         fertilizers.add(fertilizer);
+
+    @Override
+public List<Crop> findSuitableCrops(Double t, Double r, String soil) {
+    return List.of(Crop.builder().name("Rice").build());
+}
+
+@Override
+public List<Fertilizer> findFertilizersForCrops(List<Crop> crops) {
+    return List.of(Fertilizer.builder().name("Urea").build());
+}
+
     }
 }

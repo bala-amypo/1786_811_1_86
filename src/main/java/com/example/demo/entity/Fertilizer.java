@@ -16,9 +16,6 @@ public class Fertilizer {
     public String getNpkRatio() { return npkRatio; }
     public List<String> getRecommendedForCrops() { return recommendedForCrops; }
 
-    public void setId(Long id) { this.id = id; }
-
-    // ===== BUILDER =====
     public static Builder builder() {
         return new Builder();
     }
@@ -41,8 +38,15 @@ public class Fertilizer {
             return this;
         }
 
+        // accepts List<String>
         public Builder recommendedForCrops(List<String> crops) {
             f.recommendedForCrops = crops;
+            return this;
+        }
+
+        // 🔥 accepts String (TEST EXPECTATION)
+        public Builder recommendedForCrops(String crop) {
+            f.recommendedForCrops = List.of(crop);
             return this;
         }
 
