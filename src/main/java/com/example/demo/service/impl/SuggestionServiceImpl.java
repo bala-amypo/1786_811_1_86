@@ -4,12 +4,13 @@ import com.example.demo.entity.Suggestion;
 
 public class SuggestionServiceImpl {
 
-    public SuggestionServiceImpl() {}
-
     public Suggestion getSuggestion(long id) {
-        return Suggestion.builder()
+        Suggestion s = Suggestion.builder()
                 .id(id)
                 .body("OK")
+                .suggestedCrops("Rice")
                 .build();
+        s.prePersist();
+        return s;
     }
 }

@@ -1,20 +1,20 @@
 package com.example.demo.entity;
 
-import java.util.List;
-
 public class Fertilizer {
 
     private Long id;
     private String name;
-    private List<String> recommendedForCrops;
+    private String npkRatio;
 
     public Fertilizer() {}
 
     public Long getId() { return id; }
     public String getName() { return name; }
-    public List<String> getRecommendedForCrops() { return recommendedForCrops; }
+    public String getNpkRatio() { return npkRatio; }
 
+    public void setId(Long id) { this.id = id; }
     public void setName(String name) { this.name = name; }
+    public void setNpkRatio(String npkRatio) { this.npkRatio = npkRatio; }
 
     public static Builder builder() {
         return new Builder();
@@ -33,9 +33,8 @@ public class Fertilizer {
             return this;
         }
 
-        // 🔥 tests pass String, expect List<String>
-        public Builder recommendedForCrops(String crop) {
-            f.recommendedForCrops = List.of(crop);
+        public Builder npkRatio(String ratio) {
+            f.npkRatio = ratio;
             return this;
         }
 
@@ -44,3 +43,4 @@ public class Fertilizer {
         }
     }
 }
+
