@@ -7,7 +7,8 @@ import com.example.demo.service.CatalogService;
 import java.util.List;
 
 /**
- * Required ONLY because tests directly instantiate this class.
+ * This class exists ONLY because AllFunctionalTests
+ * directly instantiates CatalogServiceImpl without import.
  */
 public class CatalogServiceImpl implements CatalogService {
 
