@@ -1,42 +1,34 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.example.demo.entity.SuggestionEntity;
+import com.example.demo.entity.Suggestion;
 import com.example.demo.service.SuggestionService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/suggestions")
 public class SuggestionController {
 
-    private final SuggestionService service;
+    private final SuggestionService suggestionService;
 
-    public SuggestionController(SuggestionService service) {
-        this.service = service;
+    public SuggestionController(SuggestionService suggestionService) {
+        this.suggestionService = suggestionService;
     }
 
-    @PostMapping
-    public SuggestionEntity create(@RequestBody SuggestionEntity suggestion) {
-        return service.create(suggestion);
+    @PostMapping("/{farmId}")
+    public ResponseEntity<Suggestion> generate(@PathVariable Long farmId) {
+        return ResponseEntity.ok(suggestionService.generateSuggestion(farmId));
     }
 
-    @GetMapping
-    public List<SuggestionEntity> getAll() {
-        return service.getAll();
+    @GetMapping("/{suggestionId}")
+    public ResponseEntity<Suggestion> getSuggestion(@PathVariable Long suggestionId) {
+        return ResponseEntity.ok(suggestionService.getSuggestion(suggestionId));
     }
 
-    @GetMapping("/{id}")
-    public SuggestionEntity getById(@PathVariable Long id) {
-        return service.getById(id);
+    @GetMapping("/farm/{farmId}")
+    public ResponseEntity<List<Suggestion>> listByFarm(@PathVariable Long farmId) {
+        return ResponseEntity.ok(suggestionService.getSuggestionsByFarm(farmId));
     }
-
-
 }
