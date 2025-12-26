@@ -7,17 +7,16 @@ public class Fertilizer {
 
     public Fertilizer() {}
 
-    public Long getId() { return id; }
-    public String getName() { return name; }
+    public Long getId() {
+        return id;
+    }
 
-    public static Builder builder() { return new Builder(); }
+    public String getName() {
+        return name;
+    }
 
-    public static class Builder {
-        private final Fertilizer f = new Fertilizer();
-
-        public Builder id(long id) { f.id = id; return this; }
-        public Builder name(String name) { f.name = name; return this; }
-
-        public Fertilizer build() { return f; }
+    // ✅ THIS WAS MISSING
+    public void setName(String name) {
+        this.name = name;
     }
 }
