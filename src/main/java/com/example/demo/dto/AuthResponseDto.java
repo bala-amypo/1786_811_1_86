@@ -4,11 +4,8 @@ public class AuthResponseDto {
 
     private String token;
 
-    // Required for Spring / Jackson
-    public AuthResponseDto() {
-    }
+    public AuthResponseDto() {}
 
-    // Required by your controller / tests
     public AuthResponseDto(String token) {
         this.token = token;
     }
