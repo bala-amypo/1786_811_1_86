@@ -22,6 +22,7 @@ public class Suggestion {
     private String suggestedFertilizers;
 
     @ManyToOne
+    @JoinColumn(name = "farm_id")
     private Farm farm;
 
     private LocalDateTime createdAt;

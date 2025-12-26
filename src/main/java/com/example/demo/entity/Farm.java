@@ -24,5 +24,6 @@ public class Farm {
     private String season;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User owner;
 }
