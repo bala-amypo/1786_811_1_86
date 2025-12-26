@@ -7,6 +7,7 @@ import com.example.demo.entity.User;
 import com.example.demo.security.JwtTokenProvider;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,7 +22,8 @@ public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
-    // ✅ Constructor used by Spring
+    // ✅ Tell Spring explicitly which constructor to use
+    @Autowired
     public AuthController(UserService userService,
                           JwtTokenProvider jwtTokenProvider,
                           PasswordEncoder passwordEncoder) {
@@ -30,7 +32,7 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // ✅ Constructor REQUIRED by tests
+    // ✅ Constructor required ONLY for unit tests
     public AuthController(UserService userService,
                           JwtTokenProvider jwtTokenProvider) {
         this.userService = userService;
