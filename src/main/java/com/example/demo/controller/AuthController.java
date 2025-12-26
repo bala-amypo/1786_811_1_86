@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.AuthRequestDto;
+import com.example.demo.dto.AuthRequest;
+import com.example.demo.dto.RegisterRequest;
 import com.example.demo.dto.AuthResponseDto;
-import com.example.demo.dto.RegisterRequestDto;
 import com.example.demo.entity.User;
 import com.example.demo.security.JwtTokenProvider;
 import com.example.demo.service.UserService;
@@ -16,7 +16,7 @@ public class AuthController {
     private final UserService userService;
     private final JwtTokenProvider jwtTokenProvider;
 
-    // ✅ Constructor exactly as tests expect
+    // Constructor EXACTLY as tests expect
     public AuthController(UserService userService,
                           JwtTokenProvider jwtTokenProvider) {
         this.userService = userService;
@@ -26,7 +26,7 @@ public class AuthController {
     // ================= REGISTER =================
     @PostMapping("/register")
     public ResponseEntity<AuthResponseDto> register(
-            @RequestBody RegisterRequestDto request) {
+            @RequestBody RegisterRequest request) {
 
         User user = new User();
         user.setName(request.getName());
@@ -34,12 +34,12 @@ public class AuthController {
         user.setPassword(request.getPassword());
         user.setRole("FARMER");
 
-        User savedUser = userService.register(user);
+        User saved = userService.register(user);
 
         String token = jwtTokenProvider.createToken(
-                savedUser.getId(),
-                savedUser.getEmail(),
-                savedUser.getRole()
+                saved.getId(),
+                saved.getEmail(),
+                saved.getRole()
         );
 
         return ResponseEntity.ok(new AuthResponseDto(token));
@@ -48,7 +48,7 @@ public class AuthController {
     // ================= LOGIN =================
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDto> login(
-            @RequestBody AuthRequestDto request) {
+            @RequestBody AuthRequest request) {
 
         User user = userService.findByEmail(request.getEmail());
 
@@ -61,4 +61,3 @@ public class AuthController {
         return ResponseEntity.ok(new AuthResponseDto(token));
     }
 }
-
