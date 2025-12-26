@@ -1,11 +1,20 @@
 package com.example.demo.dto;
 
-public class AuthRequestDto {
+public class RegisterRequest {
 
+    private String name;
     private String email;
     private String password;
 
-    public AuthRequestDto() {}
+    public RegisterRequest() {}
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getEmail() {
         return email;
