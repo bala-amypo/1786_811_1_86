@@ -56,12 +56,7 @@ public class CatalogServiceImpl implements CatalogService {
         list.add(fert);
         return list;
     }
-@Override
-public List<Crop> findSuitableCrops(Double t, Double r, String soil) {
-    BodyList<Crop> list = new BodyList<>();
-    list.add(Crop.builder().name("Rice").build());
-    return list;
-}
+
 
 @Override
 public List<Fertilizer> findFertilizersForCrops(List<Crop> crops) {
