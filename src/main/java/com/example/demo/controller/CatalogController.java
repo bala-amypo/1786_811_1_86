@@ -37,8 +37,7 @@ public class CatalogController {
 
     @GetMapping("/find-ferts")
     public List<Fertilizer> findFerts(@RequestParam String crop) {
-        Crop c = new Crop();
-        c.setName(crop);
-        return catalogService.findFertilizersForCrops(List.of(c));
+        // ✅ service expects List<String>, NOT List<Crop>
+        return catalogService.findFertilizersForCrops(List.of(crop));
     }
 }
