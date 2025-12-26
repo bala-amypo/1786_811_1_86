@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Catalog;
 import com.example.demo.entity.Crop;
 import com.example.demo.entity.Fertilizer;
 
@@ -8,17 +7,11 @@ import java.util.List;
 
 public interface CatalogService {
 
-    Catalog save(Catalog catalog);
+    Crop addCrop(Crop crop);
 
-    List<Catalog> findAll();
+    Fertilizer addFertilizer(Fertilizer fertilizer);
 
-    Catalog findById(long id);
+    List<Crop> findSuitableCrops(Double ph, Double water, String season);
 
-    List<Crop> findSuitableCrops(Double temperature, Double rainfall, String soilType);
-
-    List<Fertilizer> findFertilizersForCrops(List<Crop> crops);
-
-    void addCrop(Crop crop);
-
-    void addFertilizer(Fertilizer fertilizer);
+    List<Fertilizer> findFertilizersForCrops(List<String> cropNames);
 }

@@ -1,31 +1,12 @@
-package com.example.demo.entity;
+package com.example.demo.service;
 
-import jakarta.persistence.*;
-import lombok.*;
+import com.example.demo.entity.User;
 
-import java.util.List;
+public interface UserService {
 
-@Entity
-@Table(name = "users")
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class User {
+    User register(User user);
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    User findByEmail(String email);
 
-    private String name;
-
-    @Column(unique = true)
-    private String email;
-
-    private String password;
-
-    private String role;
-
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Farm> farms;
+    User findById(Long id);
 }
