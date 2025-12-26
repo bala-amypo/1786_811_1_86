@@ -1,16 +1,10 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "suggestions")
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class Suggestion {
 
     @Id
@@ -27,8 +21,55 @@ public class Suggestion {
 
     private LocalDateTime createdAt;
 
+    public Suggestion() {}
+
+    // ===== JPA LIFECYCLE =====
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
+    }
+
+    // ===== GETTERS =====
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getSuggestedCrops() {
+        return suggestedCrops;
+    }
+
+    public String getSuggestedFertilizers() {
+        return suggestedFertilizers;
+    }
+
+    public Farm getFarm() {
+        return farm;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    // ===== SETTERS =====
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setSuggestedCrops(String suggestedCrops) {
+        this.suggestedCrops = suggestedCrops;
+    }
+
+    public void setSuggestedFertilizers(String suggestedFertilizers) {
+        this.suggestedFertilizers = suggestedFertilizers;
+    }
+
+    public void setFarm(Farm farm) {
+        this.farm = farm;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
