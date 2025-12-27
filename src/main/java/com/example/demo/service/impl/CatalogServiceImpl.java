@@ -1,11 +1,7 @@
-package com.example.demo.service.impl;
+package com.example.demo;
 
-import com.example.demo.dto.CropRequest;
-import com.example.demo.dto.FertilizerRequest;
-import com.example.demo.entity.Crop;
-import com.example.demo.entity.Fertilizer;
-import com.example.demo.repository.CropRepository;
-import com.example.demo.repository.FertilizerRepository;
+import com.example.demo.entity.*;
+import com.example.demo.repository.*;
 import com.example.demo.service.CatalogService;
 
 import java.util.List;
@@ -15,29 +11,25 @@ public class CatalogServiceImpl implements CatalogService {
     private final CropRepository cropRepo;
     private final FertilizerRepository fertRepo;
 
-    // Constructor for real repository injection
     public CatalogServiceImpl(CropRepository cropRepo,
                               FertilizerRepository fertRepo) {
         this.cropRepo = cropRepo;
         this.fertRepo = fertRepo;
     }
 
-    // Default constructor for tests
     public CatalogServiceImpl() {
         this.cropRepo = null;
         this.fertRepo = null;
     }
 
     @Override
-    public Crop addCrop(CropRequest request) {
-        // ✅ Use toEntity() to convert DTO to entity
-        return request.toEntity();
+    public Crop addCrop(Crop crop) {
+        return crop;
     }
 
     @Override
-    public Fertilizer addFertilizer(FertilizerRequest request) {
-        // ✅ Use toEntity() to convert DTO to entity
-        return request.toEntity();
+    public Fertilizer addFertilizer(Fertilizer f) {
+        return f;
     }
 
     @Override
