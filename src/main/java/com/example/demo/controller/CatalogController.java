@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.Crop;
 import com.example.demo.entity.Fertilizer;
 import com.example.demo.service.CatalogService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,25 +20,28 @@ public class CatalogController {
     }
 
     @PostMapping("/crop")
-    public void addCrop(@RequestBody Crop crop, Authentication auth) {
-        catalogService.addCrop(crop);
+    public ResponseEntity<Crop> addCrop(@RequestBody Crop crop, Authentication auth) {
+        Crop saved = catalogService.addCrop(crop);
+        return ResponseEntity.ok(saved);
     }
 
     @PostMapping("/fertilizer")
-    public void addFertilizer(@RequestBody Fertilizer fertilizer, Authentication auth) {
-        catalogService.addFertilizer(fertilizer);
+    public ResponseEntity<Fertilizer> addFertilizer(@RequestBody Fertilizer fertilizer, Authentication auth) {
+        Fertilizer saved = catalogService.addFertilizer(fertilizer);
+        return ResponseEntity.ok(saved);
     }
 
     @GetMapping("/find-crops")
-    public List<Crop> findCrops(@RequestParam Double temp,
-                                @RequestParam Double rain,
-                                @RequestParam String soil) {
-        return catalogService.findSuitableCrops(temp, rain, soil);
+    public ResponseEntity<List<Crop>> findCrops(@RequestParam Double temp,
+                                                @RequestParam Double rain,
+                                                @RequestParam String soil) {
+        List<Crop> crops = catalogService.findSuitableCrops(temp, rain, soil);
+        return ResponseEntity.ok(crops);
     }
 
     @GetMapping("/find-ferts")
-    public List<Fertilizer> findFerts(@RequestParam String crop) {
-        // ✅ service expects List<String>, NOT List<Crop>
-        return catalogService.findFertilizersForCrops(List.of(crop));
+    public ResponseEntity<List<Fertilizer>> findFerts(@RequestParam String crop) {
+        List<Fertilizer> ferts = catalogService.findFertilizersForCrops(List.of(crop));
+        return ResponseEntity.ok(ferts);
     }
 }
