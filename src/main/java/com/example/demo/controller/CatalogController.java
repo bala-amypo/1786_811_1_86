@@ -1,47 +1,67 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.CropRequest;
+import com.example.demo.dto.FertilizerRequest;
 import com.example.demo.entity.Crop;
 import com.example.demo.entity.Fertilizer;
 import com.example.demo.service.CatalogService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/catalog")
+@RequiredArgsConstructor
+@Tag(name = "Crop & Fertilizer Catalog")
 public class CatalogController {
-
     private final CatalogService catalogService;
 
-    public CatalogController(CatalogService catalogService) {
-        this.catalogService = catalogService;
-    }
-
+    @Operation(summary = "Add crop (ADMIN only)")
     @PostMapping("/crop")
-    public ResponseEntity<Crop> addCrop(@RequestBody Crop crop, Authentication auth) {
-        Crop saved = catalogService.addCrop(crop);
-        return ResponseEntity.ok(saved);
+    public ResponseEntity<Crop> addCrop(@RequestBody CropRequest req, Authentication auth) {
+        // naive role check
+        var roles = auth.getAuthorities();
+        boolean isAdmin = roles.stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+        if (!isAdmin) return ResponseEntity.status(403).build();
+
+        Crop c = Crop.builder()
+                .name(req.getName())
+                .suitablePHMin(req.getSuitablePHMin())
+                .suitablePHMax(req.getSuitablePHMax())
+                .requiredWater(req.getRequiredWater())
+                .season(req.getSeason())
+                .build();
+        return ResponseEntity.ok(catalogService.addCrop(c));
     }
 
+    @Operation(summary = "Add fertilizer (ADMIN only)")
     @PostMapping("/fertilizer")
-    public ResponseEntity<Fertilizer> addFertilizer(@RequestBody Fertilizer fertilizer, Authentication auth) {
-        Fertilizer saved = catalogService.addFertilizer(fertilizer);
-        return ResponseEntity.ok(saved);
+    public ResponseEntity<Fertilizer> addFertilizer(@RequestBody FertilizerRequest req, Authentication auth) {
+        var roles = auth.getAuthorities();
+        boolean isAdmin = roles.stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+        if (!isAdmin) return ResponseEntity.status(403).build();
+
+        Fertilizer f = Fertilizer.builder()
+                .name(req.getName())
+                .npkRatio(req.getNpkRatio())
+                .recommendedForCrops(req.getRecommendedForCrops())
+                .build();
+        return ResponseEntity.ok(catalogService.addFertilizer(f));
     }
 
-    @GetMapping("/find-crops")
-    public ResponseEntity<List<Crop>> findCrops(@RequestParam Double temp,
-                                                @RequestParam Double rain,
-                                                @RequestParam String soil) {
-        List<Crop> crops = catalogService.findSuitableCrops(temp, rain, soil);
-        return ResponseEntity.ok(crops);
+    @Operation(summary = "Find suitable crops by ph, water and season")
+    @GetMapping("/crops/suitable")
+    public ResponseEntity<List<Crop>> findCrops(@RequestParam Double ph, @RequestParam Double water, @RequestParam String season) {
+        return ResponseEntity.ok(catalogService.findSuitableCrops(ph, water, season));
     }
 
-    @GetMapping("/find-ferts")
-    public ResponseEntity<List<Fertilizer>> findFerts(@RequestParam String crop) {
-        List<Fertilizer> ferts = catalogService.findFertilizersForCrops(List.of(crop));
-        return ResponseEntity.ok(ferts);
+    @Operation(summary = "Find fertilizers by crop name")
+    @GetMapping("/fertilizers/by-crop")
+    public ResponseEntity<List<Fertilizer>> findFerts(@RequestParam String name) {
+        return ResponseEntity.ok(catalogService.findFertilizersForCrops(List.of(name)));
     }
 }

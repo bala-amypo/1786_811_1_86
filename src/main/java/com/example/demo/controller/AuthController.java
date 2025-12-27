@@ -1,70 +1,42 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.AuthRequest;
-import com.example.demo.dto.AuthResponseDto;
-import com.example.demo.dto.RegisterRequest;
+import com.example.demo.dto.*;
 import com.example.demo.entity.User;
-import com.example.demo.security.JwtTokenProvider;
 import com.example.demo.service.UserService;
-import org.springframework.http.HttpStatus;
+import com.example.demo.security.JwtTokenProvider;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
+@Tag(name = "Authentication")
 public class AuthController {
 
     private final UserService userService;
     private final JwtTokenProvider jwtTokenProvider;
 
-    // ✅ Constructor EXACTLY as tests expect
-    public AuthController(UserService userService,
-                          JwtTokenProvider jwtTokenProvider) {
-        this.userService = userService;
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
-
-    // ================= REGISTER =================
+    @Operation(summary = "Register a new user")
     @PostMapping("/register")
-    public ResponseEntity<AuthResponseDto> register(
-            @RequestBody RegisterRequest request) {
-
-        User user = User.builder()
-                .name(request.getName())
-                .email(request.getEmail())
-                .password(request.getPassword())
-                .role("ROLE_FARMER")
-                .build();
-
-        User saved = userService.register(user);
-
-        String token = jwtTokenProvider.createToken(
-                saved.getId(),
-                saved.getEmail(),
-                saved.getRole()
-        );
-
-        return ResponseEntity.ok(new AuthResponseDto(token));
+    public ResponseEntity<?> register(@RequestBody RegisterRequest req) {
+        User u = User.builder().name(req.getName()).email(req.getEmail()).password(req.getPassword()).build();
+        User saved = userService.register(u);
+        return ResponseEntity.ok(saved);
     }
 
-    // ================= LOGIN =================
+    @Operation(summary = "Login and receive JWT")
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDto> login(
-            @RequestBody AuthRequest request) {
-
-        User user = userService.findByEmail(request.getEmail());
-
-        // ❗ Tests expect 401 when password is wrong
-        if (!user.getPassword().equals(request.getPassword())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest req) {
+        User u = userService.findByEmail(req.getEmail());
+        // password check
+        var encoder = new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
+        if (!encoder.matches(req.getPassword(), u.getPassword())) {
+            return ResponseEntity.status(401).build();
         }
-
-        String token = jwtTokenProvider.createToken(
-                user.getId(),
-                user.getEmail(),
-                user.getRole()
-        );
-
-        return ResponseEntity.ok(new AuthResponseDto(token));
+        String token = jwtTokenProvider.createToken(u.getId(), u.getEmail(), u.getRole());
+        return ResponseEntity.ok(new AuthResponse(token, u.getId(), u.getEmail(), u.getRole()));
     }
 }
