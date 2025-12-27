@@ -1,7 +1,5 @@
 package com.example.demo;
 
-import com.example.demo.service.impl.UserServiceImpl;
-
 import com.example.demo.DemoApplication;
 import com.example.demo.controller.*;
 import com.example.demo.dto.*;
@@ -22,10 +20,6 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-
-
-
 @Listeners(TestResultListener.class)
 public class AllFunctionalTests {
 
