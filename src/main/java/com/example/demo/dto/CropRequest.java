@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.entity.Crop;
 import lombok.*;
 
 @Getter
@@ -12,4 +13,14 @@ public class CropRequest {
     private Double suitablePHMax;
     private Double requiredWater;
     private String season;
+
+    public Crop toEntity() {
+        return Crop.builder()
+                .name(this.name)
+                .suitablePHMin(this.suitablePHMin)
+                .suitablePHMax(this.suitablePHMax)
+                .requiredWater(this.requiredWater)
+                .season(this.season)
+                .build();
+    }
 }
