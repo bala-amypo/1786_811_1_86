@@ -1,35 +1,39 @@
-package com.example.demo;
+package com.example.demo.service;
 
 import com.example.demo.entity.Farm;
+import com.example.demo.entity.User;
 import com.example.demo.repository.FarmRepository;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.service.FarmService;
-
+import com.example.demo.exception.ResourceNotFoundException;
+import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class FarmServiceImpl implements FarmService {
-
-    private final FarmRepository farmRepo;
-    private final UserRepository userRepo;
-
-    public FarmServiceImpl(FarmRepository farmRepo,
-                           UserRepository userRepo) {
-        this.farmRepo = farmRepo;
-        this.userRepo = userRepo;
-    }
+    private final FarmRepository farmRepository;
+    private final UserRepository userRepository;
 
     @Override
     public Farm createFarm(Farm farm, Long ownerId) {
-        return farm;
-    }
-
-    @Override
-    public Farm getFarmById(Long id) {
-        return null;
+        User owner = userRepository.findById(ownerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Owner not found"));
+        // validation
+        if (farm.getSoilPH() < 3.0 || farm.getSoilPH() > 10.0) {
+            throw new IllegalArgumentException("pH must be between 3 and 10");
+        }
+        farm.setOwner(owner);
+        return farmRepository.save(farm);
     }
 
     @Override
     public List<Farm> getFarmsByOwner(Long ownerId) {
-        return List.of();
+        return farmRepository.findByOwnerId(ownerId);
+    }
+
+    @Override
+    public Farm getFarmById(Long farmId) {
+        return farmRepository.findById(farmId).orElseThrow(() -> new ResourceNotFoundException("Farm not found"));
     }
 }
