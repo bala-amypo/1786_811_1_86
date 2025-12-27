@@ -4,22 +4,27 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
 
-@Data
-@Builder
+@Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Builder
 public class Suggestion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String suggestedCrops;
-    private String suggestedFertilizers;
-
     @ManyToOne
+    @JoinColumn(name = "farm_id", nullable = false)
     private Farm farm;
+
+    @Lob
+    private String suggestedCrops;
+
+    @Lob
+    private String suggestedFertilizers;
 
     private LocalDateTime createdAt;
 
