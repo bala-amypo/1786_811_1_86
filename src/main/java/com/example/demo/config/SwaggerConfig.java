@@ -11,9 +11,9 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI api() {
         return new OpenAPI()
-                .servers(List.of(
-                        new Server().url("https://9384.pro604cr.amypo.ai/")
-                ))
+                // .servers(List.of(
+                //         new Server().url("https://9384.pro604cr.amypo.ai/")
+                // ))
                 .info(new Info().title("Crop & Fertilizer Suggestion API").version("1.0"))
                 .components(new Components()
                         .addSecuritySchemes("bearer-key",
