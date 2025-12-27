@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.service.impl;
 
 import com.example.demo.dto.CropRequest;
 import com.example.demo.dto.FertilizerRequest;
@@ -15,39 +15,29 @@ public class CatalogServiceImpl implements CatalogService {
     private final CropRepository cropRepo;
     private final FertilizerRepository fertRepo;
 
+    // Constructor for real repository injection
     public CatalogServiceImpl(CropRepository cropRepo,
                               FertilizerRepository fertRepo) {
         this.cropRepo = cropRepo;
         this.fertRepo = fertRepo;
     }
 
+    // Default constructor for tests
     public CatalogServiceImpl() {
         this.cropRepo = null;
         this.fertRepo = null;
     }
 
-    // Original entity-based method
     @Override
-    public Crop addCrop(Crop crop) {
-        // Normally you would save to repo:
-        // return cropRepo.save(crop);
-        return crop;
-    }
-
-    // New overload to accept CropRequest DTO
     public Crop addCrop(CropRequest request) {
-        return addCrop(request.toEntity());
+        // ✅ Use toEntity() to convert DTO to entity
+        return request.toEntity();
     }
 
     @Override
-    public Fertilizer addFertilizer(Fertilizer f) {
-        // Normally: return fertRepo.save(f);
-        return f;
-    }
-
-    // New overload to accept FertilizerRequest DTO
     public Fertilizer addFertilizer(FertilizerRequest request) {
-        return addFertilizer(request.toEntity());
+        // ✅ Use toEntity() to convert DTO to entity
+        return request.toEntity();
     }
 
     @Override

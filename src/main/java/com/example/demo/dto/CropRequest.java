@@ -1,25 +1,31 @@
 package com.example.demo.dto;
 
+import com.example.demo.entity.Crop;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CropRequest {
+
     private String name;
-    private Double suitablePHMin;
-    private Double suitablePHMax;
-    private Double requiredWater;
+    private double suitablePHMin;
+    private double suitablePHMax;
+    private double requiredWater;
     private String season;
 
-    public CropRequest() {}
-
-    public CropRequest(String name, double min, double max, double water, String season) {
-        this.name = name;
-        this.suitablePHMin = min;
-        this.suitablePHMax = max;
-        this.requiredWater = water;
-        this.season = season;
+    /**
+     * Convert DTO to entity
+     */
+    public Crop toEntity() {
+        return Crop.builder()
+                .name(this.name)
+                .suitablePHMin(this.suitablePHMin)
+                .suitablePHMax(this.suitablePHMax)
+                .requiredWater(this.requiredWater)
+                .season(this.season)
+                .build();
     }
-
-    public String getName() { return name; }
-    public Double getSuitablePHMin() { return suitablePHMin; }
-    public Double getSuitablePHMax() { return suitablePHMax; }
-    public Double getRequiredWater() { return requiredWater; }
-    public String getSeason() { return season; }
 }
