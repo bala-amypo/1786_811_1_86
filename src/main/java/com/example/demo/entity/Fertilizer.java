@@ -15,11 +15,11 @@ public class Fertilizer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Test expects getName()
+    
     @Column(nullable = false)
     private String name;
 
-    // Test expects getNpkRatio()
+  
     @Column(name = "npk_ratio")
     private String npkRatio;
 
