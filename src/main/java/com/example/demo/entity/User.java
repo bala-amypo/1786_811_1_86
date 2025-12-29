@@ -21,5 +21,5 @@ public class User {
 
     private String password;
 
-    private String role; // USER or ADMIN
+    private String role; 
 }
