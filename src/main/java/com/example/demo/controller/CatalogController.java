@@ -23,7 +23,7 @@ public class CatalogController {
     @Operation(summary = "Add crop (ADMIN only)")
     @PostMapping("/crop")
     public ResponseEntity<Crop> addCrop(@RequestBody CropRequest req, Authentication auth) {
-        // naive role check
+    
         var roles = auth.getAuthorities();
         boolean isAdmin = roles.stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
         if (!isAdmin) return ResponseEntity.status(403).build();

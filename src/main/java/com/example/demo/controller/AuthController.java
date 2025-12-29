@@ -31,7 +31,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest req) {
         User u = userService.findByEmail(req.getEmail());
-        // password check
+        
         var encoder = new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
         if (!encoder.matches(req.getPassword(), u.getPassword())) {
             return ResponseEntity.status(401).build();
