@@ -19,7 +19,7 @@ public class FarmServiceImpl implements FarmService {
     public Farm createFarm(Farm farm, Long ownerId) {
         User owner = userRepository.findById(ownerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Owner not found"));
-        // validation
+       
         if (farm.getSoilPH() < 3.0 || farm.getSoilPH() > 10.0) {
             throw new IllegalArgumentException("pH must be between 3 and 10");
         }

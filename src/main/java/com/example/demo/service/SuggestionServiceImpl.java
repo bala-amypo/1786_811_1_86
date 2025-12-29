@@ -41,7 +41,7 @@ public class SuggestionServiceImpl implements SuggestionService {
                 .map(Fertilizer::getName)
                 .toList();
 
-        // Always return Suggestion (test 43 requirement)
+       
         Suggestion s = Suggestion.builder()
                 .farm(farm)                                     // <-- FIXED
                 .suggestedCrops(String.join(",", cropNames))    // empty string if none
