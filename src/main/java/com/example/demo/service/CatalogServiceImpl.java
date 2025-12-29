@@ -23,7 +23,7 @@ public class CatalogServiceImpl implements CatalogService {
         if (crop.getSuitablePHMin() > crop.getSuitablePHMax()) {
             throw new BadRequestException("PH min cannot be greater than PH max");
         }
-        // Validate season
+       
         if (!List.of("Kharif","Rabi","Summer").contains(crop.getSeason())) {
             throw new BadRequestException("Invalid season");
         }
@@ -32,7 +32,7 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     public Fertilizer addFertilizer(Fertilizer fertilizer) {
-        // naive npk validation: three numbers separated by '-'
+        
         if (!fertilizer.getNpkRatio().matches("\\d+-\\d+-\\d+")) {
             throw new BadRequestException("Invalid NPK format, expected N-P-K");
         }
@@ -41,9 +41,9 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     public List<Crop> findSuitableCrops(Double ph, Double waterLevel, String season) {
-        // simple filter: by ph and season, ignore waterLevel for simplicity, can extend
+       
         List<Crop> byPHAndSeason = cropRepository.findSuitableCrops(ph, season);
-        // further filter by requiredWater <= waterLevel
+       
         return byPHAndSeason.stream()
                 .filter(c -> c.getRequiredWater() == null || c.getRequiredWater() <= waterLevel)
                 .collect(Collectors.toList());
